@@ -1,0 +1,23 @@
+{
+  "name": "planmydream",
+  "version": "1.0.0",
+  "private": true,
+  "packageManager": "pnpm@9.15.0",
+  "scripts": {
+    "dev": "turbo run dev",
+    "dev:web": "turbo run dev --filter=@planmydream/web",
+    "dev:admin": "turbo run dev --filter=@planmydream/admin",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "typecheck": "turbo run typecheck",
+    "db:generate": "pnpm --filter=@planmydream/database generate",
+    "db:migrate": "pnpm --filter=@planmydream/database migrate",
+    "db:push": "pnpm --filter=@planmydream/database push",
+    "db:studio": "pnpm --filter=@planmydream/database studio",
+    "db:seed": "pnpm --filter=@planmydream/database seed"
+  },
+  "devDependencies": {
+    "turbo": "^2.3.0",
+    "typescript": "^5.7.0"
+  }
+}
