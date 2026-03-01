@@ -2,6 +2,7 @@ import { pgTable, uuid, varchar, text, integer, decimal, timestamp, jsonb, index
 import { relations } from 'drizzle-orm';
 import { destinations } from './destinations';
 import { users } from './users';
+import { teamMembers } from './system';
 
 // Типы для JSON полей
 export interface TourHighlight {
@@ -50,6 +51,7 @@ export const tours = pgTable('tours', {
   paymentTerms: text('payment_terms'), // Порядок оплаты
   accommodationInfo: text('accommodation_info'), // Описание отелей
   additionalServices: text('additional_services'), // Доп. услуги
+  weatherInfo: text('weather_info'), // Информация о погоде в туре
   
   // SEO
   seoTitle: varchar('seo_title', { length: 255 }),
@@ -60,6 +62,7 @@ export const tours = pgTable('tours', {
   // Связи
   destinationId: uuid('destination_id').references(() => destinations.id),
   createdBy: uuid('created_by').references(() => users.id),
+  organizerId: uuid('organizer_id').references(() => teamMembers.id), // Организатор тура
   
   // Статус и даты
   status: varchar('status', { length: 20 }).default('draft').notNull(), // draft, published, archived
@@ -84,6 +87,10 @@ export const toursRelations = relations(tours, ({ one }) => ({
   createdByUser: one(users, {
     fields: [tours.createdBy],
     references: [users.id],
+  }),
+  organizer: one(teamMembers, {
+    fields: [tours.organizerId],
+    references: [teamMembers.id],
   }),
 }));
 

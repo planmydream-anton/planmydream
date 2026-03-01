@@ -61,8 +61,10 @@ export const tourSchema = z.object({
   groupSizeMax: z.number().int().positive().optional(),
   
   destinationId: z.string().uuid().optional(),
+  organizerId: z.string().uuid().optional(),
+  weatherInfo: z.string().optional(),
   status: z.enum(['draft', 'published', 'archived']).default('draft'),
-  
+
   // SEO
   seoTitle: z.string().max(255).optional(),
   seoDescription: z.string().max(500).optional(),
