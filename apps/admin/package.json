@@ -19,7 +19,7 @@
     "vue-router": "^4.4.0",
     "zod": "^3.24.0",
     "jose": "^5.0.0",
-    "bcrypt": "^5.1.0",
+    "bcryptjs": "^2.4.3",
     "@tiptap/vue-3": "^2.11.0",
     "@tiptap/starter-kit": "^2.11.0",
     "@tiptap/extension-image": "^2.11.0",
@@ -28,7 +28,7 @@
     "vuedraggable": "^4.1.0"
   },
   "devDependencies": {
-    "@types/bcrypt": "^5.0.0",
+    "@types/bcryptjs": "^2.4.6",
     "@types/node": "^22.10.0",
     "typescript": "^5.7.0"
   }

@@ -1,5 +1,5 @@
 import { eq } from 'drizzle-orm'
-import bcrypt from 'bcrypt'
+import bcrypt from 'bcryptjs'
 import { users } from '@planmydream/database/schema'
 import { loginSchema } from '@planmydream/shared/validators'
 
