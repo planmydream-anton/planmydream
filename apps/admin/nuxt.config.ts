@@ -1,3 +1,7 @@
+import { resolve } from 'path'
+
+const rootDir = resolve(__dirname, '../..')
+
 export default defineNuxtConfig({
   // SPA mode — админке не нужен SSR
   ssr: false,
@@ -22,6 +26,30 @@ export default defineNuxtConfig({
   typescript: {
     strict: true,
     typeCheck: false,
+  },
+
+  // Алиасы для workspace-пакетов
+  alias: {
+    '@planmydream/database': resolve(rootDir, 'packages/database'),
+    '@planmydream/database/schema': resolve(rootDir, 'packages/database/schema'),
+    '@planmydream/shared': resolve(rootDir, 'packages/shared'),
+    '@planmydream/shared/validators': resolve(rootDir, 'packages/shared/validators'),
+  },
+
+  // Nitro — встроить workspace-пакеты в серверный бандл
+  nitro: {
+    alias: {
+      '@planmydream/database': resolve(rootDir, 'packages/database'),
+      '@planmydream/database/schema': resolve(rootDir, 'packages/database/schema'),
+      '@planmydream/shared': resolve(rootDir, 'packages/shared'),
+      '@planmydream/shared/validators': resolve(rootDir, 'packages/shared/validators'),
+    },
+    externals: {
+      inline: [
+        '@planmydream/database',
+        '@planmydream/shared',
+      ],
+    },
   },
 
   // Vite
