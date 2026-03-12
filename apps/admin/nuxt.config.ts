@@ -38,6 +38,7 @@ export default defineNuxtConfig({
 
   // Nitro — встроить workspace-пакеты в серверный бандл
   nitro: {
+    preset: process.env.VERCEL ? 'vercel' : undefined,
     alias: {
       '@planmydream/database': resolve(rootDir, 'packages/database'),
       '@planmydream/database/schema': resolve(rootDir, 'packages/database/schema'),
