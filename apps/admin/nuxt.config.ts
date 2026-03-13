@@ -6,6 +6,9 @@ export default defineNuxtConfig({
   // SPA mode — админке не нужен SSR
   ssr: false,
 
+  // CSS
+  css: ['~/assets/css/main.css'],
+
   // Модули
   modules: [
     '@nuxt/ui',
