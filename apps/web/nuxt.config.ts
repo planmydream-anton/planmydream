@@ -1,17 +1,40 @@
+import { resolve } from 'path'
+
+const rootDir = resolve(__dirname, '../..')
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
 
   // SSR/SSG настройки
   ssr: true,
-  
-  // Для статической генерации (можно переключить на ISR при деплое на Vercel)
-  // nitro: {
-  //   prerender: {
-  //     routes: ['/'],
-  //     crawlLinks: true
-  //   }
-  // },
+
+  // Алиасы для workspace-пакетов
+  alias: {
+    '@planmydream/database': resolve(rootDir, 'packages/database'),
+    '@planmydream/database/schema': resolve(rootDir, 'packages/database/schema'),
+    '@planmydream/shared': resolve(rootDir, 'packages/shared'),
+    '@planmydream/shared/validators': resolve(rootDir, 'packages/shared/validators'),
+    '@planmydream/shared/utils': resolve(rootDir, 'packages/shared/utils'),
+  },
+
+  // Nitro — серверная конфигурация
+  nitro: {
+    preset: process.env.VERCEL ? 'vercel' : undefined,
+    alias: {
+      '@planmydream/database': resolve(rootDir, 'packages/database'),
+      '@planmydream/database/schema': resolve(rootDir, 'packages/database/schema'),
+      '@planmydream/shared': resolve(rootDir, 'packages/shared'),
+      '@planmydream/shared/validators': resolve(rootDir, 'packages/shared/validators'),
+      '@planmydream/shared/utils': resolve(rootDir, 'packages/shared/utils'),
+    },
+    externals: {
+      inline: [
+        '@planmydream/database',
+        '@planmydream/shared',
+      ],
+    },
+  },
 
   // Модули
   modules: [
