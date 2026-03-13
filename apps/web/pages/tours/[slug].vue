@@ -104,10 +104,10 @@ const includedItems = computed<TourIncludeItem[]>(() => {
 
 const excludedItems = computed<TourIncludeItem[]>(() => {
   if (!tour.value?.excludes) return []
-  return tour.value.excludes.map((text, index) => ({
+  return tour.value.excludes.map((item: any, index: number) => ({
     id: `exc-${index}`,
-    text,
-    category: 'other',
+    text: typeof item === 'string' ? item : item.text || '',
+    category: typeof item === 'string' ? 'other' : (item.category || 'other'),
   }))
 })
 

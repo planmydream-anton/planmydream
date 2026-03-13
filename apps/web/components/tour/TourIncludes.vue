@@ -108,9 +108,10 @@ defineProps<{
 }>()
 
 // Форматирование текста (поддержка **bold**)
-function formatText(text: string): string {
+function formatText(text: any): string {
   if (!text) return ''
-  return text
+  const str = typeof text === 'string' ? text : String(text)
+  return str
     .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
     .replace(/\n/g, '<br>')
 }

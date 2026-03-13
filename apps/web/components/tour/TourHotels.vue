@@ -40,8 +40,9 @@ defineProps<{
   info?: string
 }>()
 
-function formatText(text: string): string {
+function formatText(text: any): string {
   if (!text) return ''
-  return text.replace(/\n/g, '<br>')
+  const str = typeof text === 'string' ? text : String(text)
+  return str.replace(/\n/g, '<br>')
 }
 </script>
