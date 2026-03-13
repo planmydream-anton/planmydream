@@ -53,6 +53,9 @@ importers:
       nuxt:
         specifier: ^3.14.0
         version: 3.21.1(@parcel/watcher@2.5.6)(@types/node@22.19.11)(@vercel/blob@0.27.3)(@vue/compiler-sfc@3.5.29)(cac@6.7.14)(db0@0.3.4(drizzle-orm@0.38.4(postgres@3.4.8)))(drizzle-orm@0.38.4(postgres@3.4.8))(eslint@9.39.3(jiti@2.6.1))(ioredis@5.9.3)(lightningcss@1.31.1)(magicast@0.5.2)(optionator@0.9.4)(rollup@4.59.0)(terser@5.46.0)(tsx@4.21.0)(typescript@5.9.3)(vite@7.3.1(@types/node@22.19.11)(jiti@2.6.1)(lightningcss@1.31.1)(terser@5.46.0)(tsx@4.21.0)(yaml@2.8.2))(vue-tsc@3.2.5(typescript@5.9.3))(yaml@2.8.2)
+      tailwindcss:
+        specifier: ^4
+        version: 4.2.1
       vue:
         specifier: ^3.5.0
         version: 3.5.29(typescript@5.9.3)
