@@ -1,6 +1,6 @@
-import { eq } from 'drizzle-orm'
+import { eq, asc } from 'drizzle-orm'
 import { db } from '~/server/utils/db'
-import { tours, departures, destinations } from '@planmydream/database/schema'
+import { tours, departures, destinations, tourMedia, media } from '@planmydream/database/schema'
 
 export default defineEventHandler(async (event) => {
   const slug = getRouterParam(event, 'slug')
@@ -44,6 +44,30 @@ export default defineEventHandler(async (event) => {
     .from(departures)
     .where(eq(departures.tourId, tourData.id))
     .orderBy(departures.startDate)
+
+  // Получаем медиа файлы тура
+  const tourMediaItems = await db
+    .select({
+      id: media.id,
+      url: media.url,
+      filename: media.filename,
+      type: media.type,
+      mimeType: media.mimeType,
+      width: media.width,
+      height: media.height,
+      altText: media.altText,
+      caption: media.caption,
+      position: tourMedia.position,
+      isCover: tourMedia.isCover,
+    })
+    .from(tourMedia)
+    .innerJoin(media, eq(tourMedia.mediaId, media.id))
+    .where(eq(tourMedia.tourId, tourData.id))
+    .orderBy(asc(tourMedia.position))
+
+  // Разделяем на обложку и галерею
+  const coverItem = tourMediaItems.find(m => m.isCover)
+  const galleryItems = tourMediaItems.filter(m => !m.isCover)
 
   // Вычисляем оставшиеся места для каждого выезда
   const departuresWithSpots = tourDepartures
@@ -96,6 +120,27 @@ export default defineEventHandler(async (event) => {
     seoKeywords: tourData.seoKeywords,
     ogImageUrl: tourData.ogImageUrl,
     
+    // Медиа
+    coverImage: coverItem ? {
+      id: coverItem.id,
+      url: coverItem.url,
+      filename: coverItem.filename,
+      type: coverItem.type,
+      mimeType: coverItem.mimeType,
+      altText: coverItem.altText,
+      caption: coverItem.caption,
+    } : undefined,
+
+    gallery: galleryItems.map(m => ({
+      id: m.id,
+      url: m.url,
+      filename: m.filename,
+      type: m.type,
+      mimeType: m.mimeType,
+      altText: m.altText,
+      caption: m.caption,
+    })),
+
     departures: departuresWithSpots,
     
     destination: destinationData ? {
