@@ -17,14 +17,14 @@
           <!-- Image -->
           <div class="aspect-[4/3] overflow-hidden">
             <NuxtImg
-              v-if="highlight.image?.url"
-              :src="highlight.image.url"
+              v-if="getImageUrl(highlight)"
+              :src="getImageUrl(highlight)!"
               :alt="highlight.title"
               class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
               loading="lazy"
             />
-            <div v-else class="w-full h-full bg-gray-200 flex items-center justify-center">
+            <div v-else-if="!getImageUrl(highlight)" class="w-full h-full bg-gray-200 flex items-center justify-center">
               <svg class="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
               </svg>
@@ -50,9 +50,15 @@
 </template>
 
 <script setup lang="ts">
-import type { TourHighlight } from '~/types/tour'
+import type { TourHighlight, TourHighlightDB } from '~/types/tour'
 
 defineProps<{
-  highlights: TourHighlight[]
+  highlights: (TourHighlight | TourHighlightDB)[]
 }>()
+
+function getImageUrl(highlight: TourHighlight | TourHighlightDB): string | undefined {
+  if ('image' in highlight && highlight.image?.url) return highlight.image.url
+  if ('imageUrl' in highlight && highlight.imageUrl) return highlight.imageUrl
+  return undefined
+}
 </script>

@@ -41,6 +41,9 @@
       <UButton :to="`/tours/${id}/departures`" :variant="isActive('departures') ? 'soft' : 'ghost'" size="sm">
         Даты
       </UButton>
+      <UButton :to="`/tours/${id}/accommodation`" :variant="isActive('accommodation') ? 'soft' : 'ghost'" size="sm">
+        Размещение
+      </UButton>
       <UButton :to="`/tours/${id}/media`" :variant="isActive('media') ? 'soft' : 'ghost'" size="sm">
         Медиа
       </UButton>
@@ -113,6 +116,14 @@
           <UFormField label="Макс. человек" name="groupSizeMax">
             <UInput v-model.number="state.groupSizeMax" type="number" class="w-full" />
           </UFormField>
+
+          <UFormField label="Уровень комфорта" name="comfortLevel">
+            <USelect v-model="state.comfortLevel" :items="comfortOptions" class="w-full" />
+          </UFormField>
+
+          <UFormField label="Мин. возраст" name="minAge">
+            <UInput v-model.number="state.minAge" type="number" class="w-full" />
+          </UFormField>
         </div>
 
         <!-- Relations -->
@@ -145,6 +156,10 @@
 
         <UFormField label="Дополнительные услуги" name="additionalServices">
           <UTextarea v-model="state.additionalServices" :rows="3" class="w-full" />
+        </UFormField>
+
+        <UFormField label="Как добраться" name="arrivalInfo">
+          <UTextarea v-model="state.arrivalInfo" :rows="4" class="w-full" placeholder="Рекомендации по прибытию, аэропорт, транспорт..." />
         </UFormField>
 
         <div class="flex justify-end gap-3 pt-4 border-t">
@@ -182,6 +197,13 @@ const difficultyOptions = [
   { label: 'Сложный', value: 'hard' },
   { label: 'Экстремальный', value: 'extreme' },
 ]
+const comfortOptions = [
+  { label: 'Не указан', value: '' },
+  { label: 'Базовый', value: 'basic' },
+  { label: 'Стандарт', value: 'standard' },
+  { label: 'Комфорт', value: 'comfort' },
+  { label: 'Люкс', value: 'luxury' },
+]
 
 const state = reactive({
   title: tour.value?.title || '',
@@ -203,6 +225,9 @@ const state = reactive({
   paymentTerms: tour.value?.paymentTerms || '',
   accommodationInfo: tour.value?.accommodationInfo || '',
   additionalServices: tour.value?.additionalServices || '',
+  arrivalInfo: tour.value?.arrivalInfo || '',
+  comfortLevel: tour.value?.comfortLevel || '',
+  minAge: tour.value?.minAge || undefined,
   status: tour.value?.status || 'draft',
 })
 

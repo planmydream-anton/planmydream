@@ -27,6 +27,7 @@ export default defineEventHandler(async (event) => {
     'status', 'position', 'isFeatured', 'discountPercent',
     'highlights', 'program', 'includes', 'excludes',
     'paymentTerms', 'accommodationInfo', 'additionalServices', 'weatherInfo',
+    'comfortLevel', 'minAge', 'arrivalInfo', 'accommodations',
     'seoTitle', 'seoDescription', 'seoKeywords', 'ogImageUrl',
   ]
 

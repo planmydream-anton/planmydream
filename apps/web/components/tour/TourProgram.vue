@@ -66,13 +66,13 @@
                     />
                     
                     <!-- Day images if any -->
-                    <div v-if="day.images?.length" class="mt-4 flex gap-2 overflow-x-auto">
+                    <div v-if="getDayImages(day).length" class="mt-4 grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-2">
                       <NuxtImg
-                        v-for="img in day.images"
-                        :key="img.id"
-                        :src="img.url"
-                        :alt="img.altText || day.title"
-                        class="h-24 w-auto rounded-lg object-cover flex-shrink-0"
+                        v-for="(imgUrl, imgIdx) in getDayImages(day)"
+                        :key="imgIdx"
+                        :src="imgUrl"
+                        :alt="`${day.title} - фото ${imgIdx + 1}`"
+                        class="aspect-[4/3] w-full rounded-lg object-cover cursor-pointer hover:opacity-90 transition-opacity"
                         loading="lazy"
                       />
                     </div>
@@ -124,6 +124,12 @@ function toggleDay(index: number) {
   }
   // Trigger reactivity
   expandedDays.value = new Set(expandedDays.value)
+}
+
+// Получение изображений дня (поддержка string[] и MediaItem[])
+function getDayImages(day: TourProgramDay): string[] {
+  if (!day.images?.length) return []
+  return day.images.map((img: any) => typeof img === 'string' ? img : img.url).filter(Boolean)
 }
 
 // Форматирование контента (поддержка markdown-like форматирования)

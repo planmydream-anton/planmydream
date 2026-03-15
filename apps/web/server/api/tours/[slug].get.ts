@@ -1,6 +1,6 @@
 import { eq, asc } from 'drizzle-orm'
 import { db } from '~/server/utils/db'
-import { tours, departures, destinations, tourMedia, media } from '@planmydream/database/schema'
+import { tours, departures, destinations, tourMedia, media, teamMembers } from '@planmydream/database/schema'
 
 export default defineEventHandler(async (event) => {
   const slug = getRouterParam(event, 'slug')
@@ -12,11 +12,12 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  // Получаем тур по slug
+  // Получаем тур по slug с destination и организатором
   const [tour] = await db
     .select()
     .from(tours)
     .leftJoin(destinations, eq(tours.destinationId, destinations.id))
+    .leftJoin(teamMembers, eq(tours.organizerId, teamMembers.id))
     .where(eq(tours.slug, slug))
     .limit(1)
 
@@ -29,6 +30,7 @@ export default defineEventHandler(async (event) => {
 
   const tourData = tour.tours
   const destinationData = tour.destinations
+  const organizerData = tour.team_members
 
   // Проверяем что тур опубликован (для публичного API)
   if (tourData.status !== 'published') {
@@ -109,10 +111,16 @@ export default defineEventHandler(async (event) => {
     includes: tourData.includes || [],
     excludes: tourData.excludes || [],
     
+    // Характеристики
+    comfortLevel: tourData.comfortLevel,
+    minAge: tourData.minAge,
+
     // Дополнительная информация
     paymentTerms: tourData.paymentTerms,
     accommodationInfo: tourData.accommodationInfo,
     additionalServices: tourData.additionalServices,
+    arrivalInfo: tourData.arrivalInfo,
+    accommodations: tourData.accommodations || [],
     
     // SEO
     seoTitle: tourData.seoTitle,
@@ -148,6 +156,14 @@ export default defineEventHandler(async (event) => {
       slug: destinationData.slug,
       name: destinationData.name,
       country: destinationData.country,
+    } : undefined,
+
+    organizer: organizerData ? {
+      id: organizerData.id,
+      name: organizerData.name,
+      role: organizerData.role,
+      bio: organizerData.bio,
+      photoUrl: organizerData.photoUrl,
     } : undefined,
     
     status: tourData.status,

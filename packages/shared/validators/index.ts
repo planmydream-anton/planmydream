@@ -63,6 +63,15 @@ export const tourSchema = z.object({
   destinationId: z.string().uuid().optional(),
   organizerId: z.string().uuid().optional(),
   weatherInfo: z.string().optional(),
+  comfortLevel: z.enum(['basic', 'standard', 'comfort', 'luxury']).optional(),
+  minAge: z.number().int().nonnegative().optional(),
+  arrivalInfo: z.string().optional(),
+  accommodations: z.array(z.object({
+    name: z.string().min(1),
+    description: z.string(),
+    images: z.array(z.string().url()),
+    videoUrl: z.string().url().optional(),
+  })).optional(),
   status: z.enum(['draft', 'published', 'archived']).default('draft'),
 
   // SEO

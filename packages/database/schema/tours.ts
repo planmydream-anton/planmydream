@@ -15,11 +15,19 @@ export interface TourProgramDay {
   day: number;
   title: string;
   content: string; // Markdown/HTML
+  images?: string[]; // URL массив фото для дня
 }
 
 export interface TourIncludeItem {
   category: 'transport' | 'accommodation' | 'food' | 'sights' | 'services' | 'other';
   text: string;
+}
+
+export interface TourAccommodation {
+  name: string;
+  description: string;
+  images: string[];
+  videoUrl?: string;
 }
 
 export const tours = pgTable('tours', {
@@ -52,7 +60,11 @@ export const tours = pgTable('tours', {
   accommodationInfo: text('accommodation_info'), // Описание отелей
   additionalServices: text('additional_services'), // Доп. услуги
   weatherInfo: text('weather_info'), // Информация о погоде в туре
-  
+  comfortLevel: varchar('comfort_level', { length: 20 }), // basic, standard, comfort, luxury
+  minAge: integer('min_age'), // Минимальный возраст
+  arrivalInfo: text('arrival_info'), // Как добраться (markdown/HTML)
+  accommodations: jsonb('accommodations').$type<TourAccommodation[]>(), // Размещение
+
   // SEO
   seoTitle: varchar('seo_title', { length: 255 }),
   seoDescription: varchar('seo_description', { length: 500 }),

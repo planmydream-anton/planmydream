@@ -30,11 +30,20 @@ export interface Tour {
   includes?: TourIncludeItemDB[]
   excludes?: string[]
   
+  // Новые характеристики
+  comfortLevel?: 'basic' | 'standard' | 'comfort' | 'luxury'
+  minAge?: number
+
   // Дополнительная информация
   paymentTerms?: string
   accommodationInfo?: string
   additionalServices?: string
-  
+  arrivalInfo?: string
+  accommodations?: TourAccommodationItem[]
+
+  // Организатор
+  organizer?: TeamMember
+
   // Даты
   departures?: Departure[]
   
@@ -66,6 +75,7 @@ export interface TourProgramDayDB {
   day: number
   title: string
   content: string
+  images?: string[]
 }
 
 export interface TourIncludeItemDB {
@@ -109,6 +119,21 @@ export interface TourHotel {
   stars: number
   description?: string
   image?: MediaItem
+}
+
+export interface TourAccommodationItem {
+  name: string
+  description: string
+  images: string[]
+  videoUrl?: string
+}
+
+export interface TeamMember {
+  id: string
+  name: string
+  role: string
+  bio?: string
+  photoUrl?: string
 }
 
 export interface Departure {
