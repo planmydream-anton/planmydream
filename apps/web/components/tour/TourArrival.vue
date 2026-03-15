@@ -1,6 +1,6 @@
 <template>
-  <section id="arrival" class="py-12 md:py-16 bg-gray-50">
-    <div class="container mx-auto px-4">
+  <section id="arrival" class="py-8 md:py-10">
+    <div>
       <div class="max-w-3xl mx-auto">
         <!-- Section heading with icon -->
         <div class="flex items-center gap-3 mb-8">

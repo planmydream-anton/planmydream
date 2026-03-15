@@ -1,15 +1,12 @@
 <template>
-  <section id="reviews" class="py-16 md:py-24 bg-white">
-    <div class="container mx-auto px-4">
-      <h2 class="text-3xl md:text-4xl font-bold text-gray-900 text-center mb-4">
+  <section v-if="reviews?.length" id="reviews" class="py-8 md:py-10">
+    <div>
+      <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-6">
         Что говорят те, кто уже отправился с нами
       </h2>
-      <p class="text-gray-600 text-center mb-12 max-w-2xl mx-auto">
-        Отзывы наших путешественников — лучшее подтверждение качества наших туров
-      </p>
 
       <!-- Reviews slider -->
-      <div v-if="reviews?.length" class="relative max-w-4xl mx-auto">
+      <div class="relative max-w-4xl mx-auto">
         <!-- Main review card -->
         <div class="bg-gray-50 rounded-2xl p-6 md:p-10">
           <div class="flex flex-col md:flex-row gap-6 items-start">
@@ -105,15 +102,6 @@
         </div>
       </div>
 
-      <!-- Loading state -->
-      <div v-else-if="pending" class="text-center text-gray-500">
-        Загрузка отзывов...
-      </div>
-
-      <!-- Empty state -->
-      <div v-else class="text-center text-gray-500">
-        Пока нет отзывов
-      </div>
     </div>
   </section>
 </template>

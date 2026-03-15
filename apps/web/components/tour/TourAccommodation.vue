@@ -1,6 +1,6 @@
 <template>
-  <section v-if="accommodations && accommodations.length" id="accommodation" class="py-12 md:py-16 bg-gray-50">
-    <div class="container mx-auto px-4">
+  <section v-if="accommodations && accommodations.length" id="accommodation" class="py-8 md:py-10">
+    <div>
       <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
         Размещение
       </h2>

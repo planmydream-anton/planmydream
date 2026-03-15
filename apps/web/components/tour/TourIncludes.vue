@@ -1,7 +1,7 @@
 <template>
-  <section id="includes" class="py-16 md:py-24 bg-white">
-    <div class="container mx-auto px-4">
-      <h2 class="text-3xl md:text-4xl font-bold text-gray-900 text-center mb-12">
+  <section id="includes" class="py-8 md:py-10">
+    <div>
+      <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-6">
         Что включено / не включено
       </h2>
 

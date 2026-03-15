@@ -1,7 +1,7 @@
 <template>
-  <section class="py-16 md:py-24 bg-gray-50">
-    <div class="container mx-auto px-4">
-      <h2 class="text-3xl md:text-4xl font-bold text-gray-900 text-center mb-4">
+  <section class="py-8 md:py-10">
+    <div>
+      <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-6">
         Галерея
       </h2>
       <p class="text-gray-600 text-center max-w-2xl mx-auto mb-12">

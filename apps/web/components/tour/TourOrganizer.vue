@@ -1,6 +1,6 @@
 <template>
-  <section class="py-12 md:py-16 bg-white">
-    <div class="container mx-auto px-4">
+  <section class="py-8 md:py-10">
+    <div>
       <div class="max-w-3xl mx-auto">
         <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-8">
           Организатор тура

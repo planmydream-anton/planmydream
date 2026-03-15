@@ -1,7 +1,7 @@
 <template>
-  <div class="relative w-full">
+  <div class="relative w-full pt-16 md:pt-20">
     <!-- Desktop grid layout -->
-    <div class="hidden md:grid grid-cols-3 gap-2 rounded-2xl overflow-hidden max-h-[420px]">
+    <div class="hidden md:grid grid-cols-3 gap-2 rounded-2xl overflow-hidden max-h-[420px] container mx-auto px-4">
       <!-- Large image on the left (2/3 width) -->
       <div
         class="col-span-2 relative cursor-pointer group overflow-hidden"
@@ -65,7 +65,7 @@
     </div>
 
     <!-- Mobile: single image with dots indicator -->
-    <div class="md:hidden relative rounded-2xl overflow-hidden select-none">
+    <div class="md:hidden relative rounded-2xl overflow-hidden select-none mx-4">
       <div
         class="relative overflow-hidden"
         style="height: 260px;"

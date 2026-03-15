@@ -157,7 +157,6 @@ const anchorSections = computed(() => {
   sections.push({ id: 'includes', label: 'Включено' })
   if (tour.value?.arrivalInfo) sections.push({ id: 'arrival', label: 'Как добраться' })
   sections.push({ id: 'faq', label: 'FAQ' })
-  sections.push({ id: 'reviews', label: 'Отзывы' })
   return sections
 })
 
