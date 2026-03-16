@@ -102,6 +102,7 @@ export default defineEventHandler(async (event) => {
     groupSizeMin: tourData.groupSizeMin,
     groupSizeMax: tourData.groupSizeMax,
     route: tourData.route,
+    routeCities: tourData.route, // alias for info card
     discountPercent: tourData.discountPercent,
     isFeatured: tourData.isFeatured,
     

@@ -1,5 +1,5 @@
 <template>
-  <section v-if="accommodations && accommodations.length" id="accommodation" class="py-8 md:py-10">
+  <section v-if="(accommodations && accommodations.length) || infoText" id="accommodation" class="py-8 md:py-10">
     <div>
       <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
         Размещение
@@ -31,7 +31,7 @@
               <button
                 v-for="(imgUrl, imgIndex) in item.images"
                 :key="imgIndex"
-                class="flex-shrink-0 w-36 h-24 rounded-xl overflow-hidden border-2 border-transparent hover:border-orange-400 focus:border-orange-500 focus:outline-none transition-colors"
+                class="flex-shrink-0 w-36 h-24 rounded-xl overflow-hidden border-2 border-transparent hover:border-emerald-400 focus:border-emerald-500 focus:outline-none transition-colors"
                 @click="openLightbox(item.images, imgIndex)"
               >
                 <img

@@ -75,9 +75,18 @@
             v-if="tour.gallery?.length"
             :images="tour.gallery"
           />
+
+          <!-- Similar Tours -->
+          <TourSimilar :tour-id="tour.id" />
+
+          <!-- Advantages -->
+          <SectionsAdvantagesSection />
+
+          <!-- How to Book -->
+          <SectionsHowToBookSection />
         </div>
 
-        <!-- Right: Sticky Booking Sidebar (desktop only) -->
+        <!-- Right: Sticky Booking Sidebar (desktop only) — extends full height -->
         <TourBookingSidebar
           :tour="tour"
           :departures="tour.departures"
@@ -85,19 +94,8 @@
       </div>
     </div>
 
-    <!-- Full-width sections below the two-column layout -->
-
-    <!-- Similar Tours -->
-    <TourSimilar :tour-id="tour.id" />
-
-    <!-- Advantages -->
-    <SectionsAdvantagesSection />
-
-    <!-- How to Book -->
-    <SectionsHowToBookSection />
-
-    <!-- Contact Form -->
-    <SectionsContactFormSection />
+    <!-- Contact Form (full-width, below the two-column layout) -->
+    <SectionsContactFormSection :cover-image-url="tour.coverImage?.url" />
 
     <!-- Full gallery lightbox -->
     <TourGalleryLightbox
@@ -110,7 +108,7 @@
 
   <!-- Loading -->
   <div v-else-if="pending" class="min-h-screen flex items-center justify-center">
-    <div class="w-8 h-8 border-4 border-orange-500 border-t-transparent rounded-full animate-spin" />
+    <div class="w-8 h-8 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin" />
   </div>
 
   <!-- Error -->
@@ -118,7 +116,7 @@
     <div class="text-center">
       <h1 class="text-2xl font-bold text-gray-900 mb-2">Тур не найден</h1>
       <p class="text-gray-600 mb-6">К сожалению, такого тура не существует</p>
-      <NuxtLink to="/tours" class="text-orange-500 hover:text-orange-600">
+      <NuxtLink to="/tours" class="text-emerald-500 hover:text-emerald-600">
         &larr; Все туры
       </NuxtLink>
     </div>

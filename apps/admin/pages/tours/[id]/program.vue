@@ -10,7 +10,7 @@
       <UButton :to="`/tours/${id}`" variant="ghost" size="sm">Основное</UButton>
       <UButton :to="`/tours/${id}/program`" variant="soft" size="sm">Программа</UButton>
       <UButton :to="`/tours/${id}/departures`" variant="ghost" size="sm">Даты</UButton>
-      <UButton :to="`/tours/${id}/media`" variant="ghost" size="sm">Медиа</UButton>
+      <UButton :to="`/tours/${id}/media`" variant="ghost" size="sm">Галерея</UButton>
       <UButton :to="`/tours/${id}/seo`" variant="ghost" size="sm">SEO</UButton>
     </div>
 
@@ -39,7 +39,46 @@
             <div class="grid grid-cols-1 gap-3">
               <UInput v-model="highlight.title" placeholder="Название" />
               <UTextarea v-model="highlight.description" placeholder="Описание" :rows="2" />
-              <UInput v-model="highlight.imageUrl" placeholder="URL изображения" />
+
+              <!-- Image upload for highlight -->
+              <div>
+                <label class="block text-sm font-medium text-gray-500 mb-1">Изображение</label>
+                <div v-if="highlight.imageUrl" class="relative inline-block mb-2">
+                  <img
+                    :src="highlight.imageUrl"
+                    alt="Превью"
+                    class="w-40 h-28 object-cover rounded-lg border border-gray-200 dark:border-gray-700"
+                  />
+                  <button
+                    type="button"
+                    class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs hover:bg-red-600"
+                    @click="highlight.imageUrl = ''"
+                  >
+                    &times;
+                  </button>
+                </div>
+                <div
+                  class="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-4 text-center cursor-pointer hover:border-primary-500 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+                  :class="{ 'opacity-50 pointer-events-none': highlightUploading[idx] }"
+                  @dragover.prevent="onDragOver($event)"
+                  @dragleave="onDragLeave($event)"
+                  @drop.prevent="onHighlightDrop($event, idx)"
+                  @click="triggerHighlightFileInput(idx)"
+                >
+                  <input
+                    :ref="(el) => { highlightFileInputs[idx] = el as HTMLInputElement }"
+                    type="file"
+                    accept="image/*"
+                    class="hidden"
+                    @change="onHighlightFileChange($event, idx)"
+                  />
+                  <UIcon name="i-heroicons-cloud-arrow-up" class="text-2xl text-gray-400 mb-1" />
+                  <p class="text-sm text-gray-500">
+                    <template v-if="highlightUploading[idx]">Загрузка...</template>
+                    <template v-else>Перетащите файл или нажмите для выбора</template>
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -76,6 +115,60 @@
                 <UInput v-model="day.title" placeholder="Заголовок дня" />
               </div>
               <UTextarea v-model="day.content" placeholder="Описание дня (поддерживается Markdown)" :rows="4" />
+
+              <!-- Images for program day -->
+              <div>
+                <label class="block text-sm font-medium text-gray-500 mb-1">Фотографии дня (3-5 шт.)</label>
+
+                <!-- Thumbnails of uploaded images -->
+                <div v-if="day.images && day.images.length" class="flex flex-wrap gap-2 mb-2">
+                  <div
+                    v-for="(imgUrl, imgIdx) in day.images"
+                    :key="imgIdx"
+                    class="relative inline-block"
+                  >
+                    <img
+                      :src="imgUrl"
+                      alt="Фото дня"
+                      class="w-28 h-20 object-cover rounded-lg border border-gray-200 dark:border-gray-700"
+                    />
+                    <button
+                      type="button"
+                      class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs hover:bg-red-600"
+                      @click="day.images!.splice(imgIdx, 1)"
+                    >
+                      &times;
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Drop zone for day images -->
+                <div
+                  v-if="!day.images || day.images.length < 5"
+                  class="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-4 text-center cursor-pointer hover:border-primary-500 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+                  :class="{ 'opacity-50 pointer-events-none': dayUploading[idx] }"
+                  @dragover.prevent="onDragOver($event)"
+                  @dragleave="onDragLeave($event)"
+                  @drop.prevent="onDayDrop($event, idx)"
+                  @click="triggerDayFileInput(idx)"
+                >
+                  <input
+                    :ref="(el) => { dayFileInputs[idx] = el as HTMLInputElement }"
+                    type="file"
+                    accept="image/*"
+                    multiple
+                    class="hidden"
+                    @change="onDayFileChange($event, idx)"
+                  />
+                  <UIcon name="i-heroicons-cloud-arrow-up" class="text-2xl text-gray-400 mb-1" />
+                  <p class="text-sm text-gray-500">
+                    <template v-if="dayUploading[idx]">Загрузка...</template>
+                    <template v-else>
+                      Перетащите фото или нажмите для выбора (ещё {{ 5 - (day.images?.length || 0) }} шт.)
+                    </template>
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -142,8 +235,11 @@ const highlights = reactive<Array<{ title: string; description: string; imageUrl
   tour.value?.highlights || []
 )
 
-const programDays = reactive<Array<{ day: number; title: string; content: string }>>(
-  tour.value?.program || []
+const programDays = reactive<Array<{ day: number; title: string; content: string; images?: string[] }>>(
+  (tour.value?.program || []).map((d: any) => ({
+    ...d,
+    images: d.images || [],
+  }))
 )
 
 const includeItems = reactive<Array<{ category: string; text: string }>>(
@@ -163,19 +259,117 @@ const categoryOptions = [
   { label: 'Другое', value: 'other' },
 ]
 
+// Upload state
+const highlightUploading = reactive<Record<number, boolean>>({})
+const dayUploading = reactive<Record<number, boolean>>({})
+const highlightFileInputs: Record<number, HTMLInputElement | null> = {}
+const dayFileInputs: Record<number, HTMLInputElement | null> = {}
+
 function addHighlight() {
   highlights.push({ title: '', description: '', imageUrl: '' })
 }
 
 function addProgramDay() {
   const nextDay = programDays.length > 0 ? Math.max(...programDays.map(d => d.day)) + 1 : 1
-  programDays.push({ day: nextDay, title: '', content: '' })
+  programDays.push({ day: nextDay, title: '', content: '', images: [] })
 }
 
 function addInclude() {
   includeItems.push({ category: 'other', text: '' })
 }
 
+// --- File upload helper ---
+async function uploadFile(file: File): Promise<string | null> {
+  const formData = new FormData()
+  formData.append('file', file)
+  try {
+    const res = await $fetch<{ url: string }>('/api/admin/media/upload', {
+      method: 'POST',
+      body: formData,
+    })
+    return res.url
+  } catch (e: any) {
+    toast.add({ title: 'Ошибка загрузки', description: e.data?.message || 'Не удалось загрузить файл', color: 'error' })
+    return null
+  }
+}
+
+// --- Drag & drop helpers ---
+function onDragOver(event: DragEvent) {
+  const target = event.currentTarget as HTMLElement
+  target.classList.add('border-primary-500', 'bg-gray-50', 'dark:bg-gray-800')
+}
+
+function onDragLeave(event: DragEvent) {
+  const target = event.currentTarget as HTMLElement
+  target.classList.remove('border-primary-500', 'bg-gray-50', 'dark:bg-gray-800')
+}
+
+// --- Highlight image upload ---
+function triggerHighlightFileInput(idx: number) {
+  highlightFileInputs[idx]?.click()
+}
+
+async function uploadHighlightImage(file: File, idx: number) {
+  if (!file.type.startsWith('image/')) return
+  highlightUploading[idx] = true
+  const url = await uploadFile(file)
+  if (url) {
+    highlights[idx].imageUrl = url
+  }
+  highlightUploading[idx] = false
+}
+
+function onHighlightFileChange(event: Event, idx: number) {
+  const input = event.target as HTMLInputElement
+  const file = input.files?.[0]
+  if (file) uploadHighlightImage(file, idx)
+  input.value = ''
+}
+
+function onHighlightDrop(event: DragEvent, idx: number) {
+  onDragLeave(event)
+  const file = event.dataTransfer?.files?.[0]
+  if (file) uploadHighlightImage(file, idx)
+}
+
+// --- Day images upload ---
+function triggerDayFileInput(idx: number) {
+  dayFileInputs[idx]?.click()
+}
+
+async function uploadDayImages(files: File[], dayIdx: number) {
+  const day = programDays[dayIdx]
+  if (!day.images) day.images = []
+
+  const remaining = 5 - day.images.length
+  const filesToUpload = files.filter(f => f.type.startsWith('image/')).slice(0, remaining)
+  if (!filesToUpload.length) return
+
+  dayUploading[dayIdx] = true
+  for (const file of filesToUpload) {
+    const url = await uploadFile(file)
+    if (url) {
+      day.images.push(url)
+    }
+  }
+  dayUploading[dayIdx] = false
+}
+
+function onDayFileChange(event: Event, dayIdx: number) {
+  const input = event.target as HTMLInputElement
+  const files = Array.from(input.files || [])
+  if (files.length) uploadDayImages(files, dayIdx)
+  input.value = ''
+}
+
+function onDayDrop(event: DragEvent, dayIdx: number) {
+  onDragLeave(event)
+  const files = Array.from(event.dataTransfer?.files || [])
+  if (files.length) uploadDayImages(files, dayIdx)
+}
+
+// --- Save ---
 async function saveAll() {
   saving.value = true
   try {
@@ -183,7 +377,12 @@ async function saveAll() {
       method: 'PUT',
       body: {
         highlights: [...highlights],
-        program: [...programDays],
+        program: programDays.map(d => ({
+          day: d.day,
+          title: d.title,
+          content: d.content,
+          images: d.images || [],
+        })),
         includes: [...includeItems],
         excludes: [...excludeItems],
       },

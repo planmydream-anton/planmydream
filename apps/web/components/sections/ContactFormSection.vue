@@ -1,42 +1,62 @@
 <template>
-  <section class="py-16 md:py-24 bg-gradient-to-br from-emerald-500 to-emerald-600">
-    <div class="container mx-auto px-4">
-      <div class="max-w-4xl mx-auto">
-        <div class="grid md:grid-cols-2 gap-10 items-center">
-          <!-- Left: Text -->
+  <section class="relative py-16 md:py-24 overflow-hidden">
+    <!-- Background image with dark overlay -->
+    <div
+      class="absolute inset-0 bg-cover bg-center"
+      :style="backgroundStyle"
+    />
+    <div class="absolute inset-0 bg-black/60" />
+
+    <div class="container mx-auto px-4 relative z-10">
+      <div class="max-w-5xl mx-auto">
+        <!-- Title -->
+        <h2 class="text-3xl md:text-4xl font-bold text-white mb-10 text-center md:text-left">
+          Понравился тур, но все еще сомневаетесь?
+        </h2>
+
+        <div class="grid md:grid-cols-2 gap-10 items-start">
+          <!-- Left: Bullet points + contacts -->
           <div>
-            <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">
-              Готов отправиться туда, где ещё не был?
-            </h2>
-            <p class="text-white/80 mb-6">
-              Если у вас остались вопросы, то мы рады будем ответить, рассказать и помочь выбрать тур
-            </p>
-            
+            <ul class="space-y-4 mb-10">
+              <li class="flex items-start gap-3 text-white text-lg">
+                <span class="text-emerald-400 mt-0.5 text-xl leading-none">&bull;</span>
+                <span>Оставьте заявку</span>
+              </li>
+              <li class="flex items-start gap-3 text-white text-lg">
+                <span class="text-emerald-400 mt-0.5 text-xl leading-none">&bull;</span>
+                <span>Обсудим детали и ответим на любые вопросы</span>
+              </li>
+              <li class="flex items-start gap-3 text-white text-lg">
+                <span class="text-emerald-400 mt-0.5 text-xl leading-none">&bull;</span>
+                <span>Поможем определиться с билетами, рейсами</span>
+              </li>
+            </ul>
+
             <!-- Contact info -->
             <div class="space-y-4">
-              <a 
-                href="tel:+79315530887" 
+              <a
+                href="tel:+79315530887"
                 class="flex items-center gap-3 text-white hover:text-white/80 transition-colors"
               >
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                 </svg>
                 +7 (931) 553 0887
               </a>
-              <a 
-                href="tel:+74951486416" 
+              <a
+                href="tel:+74951486416"
                 class="flex items-center gap-3 text-white hover:text-white/80 transition-colors"
               >
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                 </svg>
                 +7 (495) 148 6416
               </a>
-              <a 
-                href="mailto:info@planmydream.ru" 
+              <a
+                href="mailto:info@planmydream.ru"
                 class="flex items-center gap-3 text-white hover:text-white/80 transition-colors"
               >
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
                 info@planmydream.ru
@@ -45,8 +65,8 @@
 
             <!-- Social links -->
             <div class="flex gap-4 mt-6">
-              <a 
-                href="https://wa.me/79857325804" 
+              <a
+                href="https://wa.me/79857325804"
                 target="_blank"
                 class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center hover:bg-white/30 transition-colors"
               >
@@ -54,8 +74,8 @@
                   <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
                 </svg>
               </a>
-              <a 
-                href="https://t.me/planmydream" 
+              <a
+                href="https://t.me/planmydream"
                 target="_blank"
                 class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center hover:bg-white/30 transition-colors"
               >
@@ -63,8 +83,8 @@
                   <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/>
                 </svg>
               </a>
-              <a 
-                href="https://vk.com/planmydream" 
+              <a
+                href="https://vk.com/planmydream"
                 target="_blank"
                 class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center hover:bg-white/30 transition-colors"
               >
@@ -76,7 +96,7 @@
           </div>
 
           <!-- Right: Form -->
-          <div class="bg-white rounded-2xl p-6 md:p-8">
+          <div>
             <form @submit.prevent="submitForm" class="space-y-4">
               <div>
                 <input
@@ -84,35 +104,27 @@
                   type="text"
                   placeholder="Ваше имя"
                   required
-                  class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 outline-none transition-colors"
+                  class="w-full px-4 py-3 rounded-xl bg-white text-gray-900 placeholder-gray-400 border-0 focus:ring-2 focus:ring-emerald-500/40 outline-none transition-colors"
                 />
               </div>
-              
-              <div>
+
+              <div class="relative">
+                <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 text-sm pointer-events-none">+7</span>
                 <input
                   v-model="form.phone"
                   type="tel"
                   placeholder="Телефон"
                   required
-                  class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 outline-none transition-colors"
+                  class="w-full pl-10 pr-4 py-3 rounded-xl bg-white text-gray-900 placeholder-gray-400 border-0 focus:ring-2 focus:ring-emerald-500/40 outline-none transition-colors"
                 />
               </div>
-              
+
               <div>
                 <input
                   v-model="form.email"
                   type="email"
                   placeholder="Email"
-                  class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 outline-none transition-colors"
-                />
-              </div>
-              
-              <div>
-                <textarea
-                  v-model="form.message"
-                  placeholder="Комментарий"
-                  rows="3"
-                  class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 outline-none transition-colors resize-none"
+                  class="w-full px-4 py-3 rounded-xl bg-white text-gray-900 placeholder-gray-400 border-0 focus:ring-2 focus:ring-emerald-500/40 outline-none transition-colors"
                 />
               </div>
 
@@ -122,31 +134,31 @@
                   type="checkbox"
                   required
                   id="consent"
-                  class="mt-1 rounded border-gray-300 text-emerald-500 focus:ring-emerald-500"
+                  class="mt-1 rounded border-white/30 bg-white/10 text-emerald-500 focus:ring-emerald-500"
                 />
-                <label for="consent" class="text-sm text-gray-600">
-                  Я даю согласие на 
-                  <NuxtLink to="/privacy" class="text-emerald-500 hover:underline">обработку персональных данных</NuxtLink>
-                  в соответствии с 
-                  <NuxtLink to="/conf-policy" class="text-emerald-500 hover:underline">политикой конфиденциальности</NuxtLink>
+                <label for="consent" class="text-sm text-white/80">
+                  Я даю согласие на
+                  <NuxtLink to="/privacy" class="text-emerald-400 hover:underline">обработку персональных данных</NuxtLink>
+                  в соответствии с
+                  <NuxtLink to="/conf-policy" class="text-emerald-400 hover:underline">политикой конфиденциальности</NuxtLink>
                 </label>
               </div>
 
               <button
                 type="submit"
                 :disabled="isSubmitting"
-                class="w-full bg-emerald-500 hover:bg-emerald-600 disabled:bg-emerald-300 text-white py-3 rounded-xl font-medium transition-colors"
+                class="w-full bg-emerald-500 hover:bg-emerald-600 disabled:bg-emerald-300 text-white py-3.5 rounded-xl font-semibold text-lg transition-colors"
               >
                 {{ isSubmitting ? 'Отправка...' : 'Отправить заявку' }}
               </button>
 
               <!-- Success message -->
-              <div v-if="isSuccess" class="text-green-600 text-center">
-                ✓ Спасибо! Мы свяжемся с вами в ближайшее время.
+              <div v-if="isSuccess" class="text-emerald-400 text-center font-medium">
+                Спасибо! Мы свяжемся с вами в ближайшее время.
               </div>
 
               <!-- Error message -->
-              <div v-if="error" class="text-red-600 text-center text-sm">
+              <div v-if="error" class="text-red-400 text-center text-sm">
                 {{ error }}
               </div>
             </form>
@@ -158,6 +170,18 @@
 </template>
 
 <script setup lang="ts">
+const props = defineProps<{
+  coverImageUrl?: string
+}>()
+
+const backgroundStyle = computed(() => {
+  if (props.coverImageUrl) {
+    return { backgroundImage: `url(${props.coverImageUrl})` }
+  }
+  // Fallback gradient when no image is provided
+  return { background: 'linear-gradient(135deg, #065f46 0%, #059669 50%, #047857 100%)' }
+})
+
 const form = reactive({
   name: '',
   phone: '',

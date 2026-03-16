@@ -1,7 +1,7 @@
 <template>
   <!-- Desktop: Sticky sidebar -->
-  <div class="hidden lg:block">
-    <div class="sticky top-24 bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
+  <div class="hidden lg:block self-start sticky top-24 max-h-[calc(100vh-120px)]">
+    <div class="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
       <!-- Price row -->
       <div class="flex items-center divide-x divide-gray-200">
         <!-- Price -->

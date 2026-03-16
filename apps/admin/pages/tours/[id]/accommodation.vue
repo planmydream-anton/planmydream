@@ -11,7 +11,7 @@
       <UButton :to="`/tours/${id}/program`" variant="ghost" size="sm">Программа</UButton>
       <UButton :to="`/tours/${id}/departures`" variant="ghost" size="sm">Даты</UButton>
       <UButton :to="`/tours/${id}/accommodation`" variant="soft" size="sm">Размещение</UButton>
-      <UButton :to="`/tours/${id}/media`" variant="ghost" size="sm">Медиа</UButton>
+      <UButton :to="`/tours/${id}/media`" variant="ghost" size="sm">Галерея</UButton>
       <UButton :to="`/tours/${id}/seo`" variant="ghost" size="sm">SEO</UButton>
     </div>
 

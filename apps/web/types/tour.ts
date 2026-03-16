@@ -16,6 +16,8 @@ export interface Tour {
   groupSizeMin?: number
   groupSizeMax?: number
   route?: string
+  routeCities?: string
+  extensionInfo?: string
   discountPercent?: number
   isFeatured?: number
   

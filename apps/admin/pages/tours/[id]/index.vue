@@ -45,7 +45,7 @@
         Размещение
       </UButton>
       <UButton :to="`/tours/${id}/media`" :variant="isActive('media') ? 'soft' : 'ghost'" size="sm">
-        Медиа
+        Галерея
       </UButton>
       <UButton :to="`/tours/${id}/seo`" :variant="isActive('seo') ? 'soft' : 'ghost'" size="sm">
         SEO
