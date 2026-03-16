@@ -17,9 +17,9 @@
             />
             <div
               v-else
-              class="w-20 h-20 rounded-full bg-orange-100 flex items-center justify-center border border-orange-200"
+              class="w-20 h-20 rounded-full bg-emerald-100 flex items-center justify-center border border-emerald-200"
             >
-              <span class="text-2xl font-bold text-orange-600 select-none">
+              <span class="text-2xl font-bold text-emerald-600 select-none">
                 {{ initials }}
               </span>
             </div>
@@ -30,7 +30,7 @@
             <p class="text-lg font-bold text-gray-900 leading-tight">
               {{ organizer.name }}
             </p>
-            <p class="text-sm text-orange-500 font-medium mt-0.5 mb-3">
+            <p class="text-sm text-emerald-500 font-medium mt-0.5 mb-3">
               {{ organizer.role }}
             </p>
             <p v-if="organizer.bio" class="text-gray-600 text-sm leading-relaxed">

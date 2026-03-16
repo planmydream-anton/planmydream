@@ -17,7 +17,7 @@
           class="w-full flex items-center gap-3 p-4 md:p-5 text-left hover:bg-gray-50 transition-colors"
         >
           <!-- Day label -->
-          <div class="flex-shrink-0 bg-orange-500 text-white text-sm font-bold px-3 py-1.5 rounded-lg">
+          <div class="flex-shrink-0 bg-emerald-500 text-white text-sm font-bold px-3 py-1.5 rounded-lg">
             День {{ day.day }}
           </div>
 
@@ -76,7 +76,7 @@
     <div v-if="program.length > initialVisibleCount && !showAll" class="mt-6 text-center">
       <button
         @click="showAll = true"
-        class="inline-flex items-center gap-2 text-orange-500 hover:text-orange-600 font-medium transition-colors text-sm"
+        class="inline-flex items-center gap-2 text-emerald-500 hover:text-emerald-600 font-medium transition-colors text-sm"
       >
         Показать все дни программы
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

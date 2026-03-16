@@ -17,7 +17,7 @@
           class="flex-shrink-0 relative px-4 py-4 text-sm font-medium transition-colors duration-150 whitespace-nowrap"
           :class="
             activeId === section.id
-              ? 'text-orange-500'
+              ? 'text-emerald-500'
               : 'text-neutral-500 hover:text-neutral-800'
           "
           @click.prevent="scrollToSection(section.id)"
@@ -26,7 +26,7 @@
           <!-- Active indicator underline -->
           <span
             class="absolute bottom-0 left-0 right-0 h-0.5 rounded-t-full transition-all duration-200"
-            :class="activeId === section.id ? 'bg-orange-500' : 'bg-transparent'"
+            :class="activeId === section.id ? 'bg-emerald-500' : 'bg-transparent'"
           />
         </a>
       </div>

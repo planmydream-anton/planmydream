@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "web",
+      "runtimeExecutable": "/Users/ocheretianyi.anton/.nvm/versions/node/v20.20.0/bin/node",
+      "runtimeArgs": ["apps/web/.output/server/index.mjs"],
+      "port": 3000
+    }
+  ]
+}

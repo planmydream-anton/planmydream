@@ -12,10 +12,10 @@
           class="bg-gray-50 rounded-2xl p-6"
         >
           <!-- Icon -->
-          <div class="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center mb-4">
+          <div class="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center mb-4">
             <component 
               :is="getIcon(item.icon)" 
-              class="w-6 h-6 text-orange-500" 
+              class="w-6 h-6 text-emerald-500" 
             />
           </div>
 

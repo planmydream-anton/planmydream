@@ -4,9 +4,9 @@
       <div class="max-w-3xl mx-auto">
         <!-- Section heading with icon -->
         <div class="flex items-center gap-3 mb-8">
-          <div class="flex-shrink-0 w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center">
+          <div class="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center">
             <!-- Plane icon -->
-            <svg class="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg class="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
                 stroke-linecap="round"
                 stroke-linejoin="round"
@@ -28,7 +28,7 @@
                  prose-ul:list-disc prose-ul:pl-5 prose-li:mb-1
                  prose-ol:list-decimal prose-ol:pl-5
                  prose-strong:text-gray-900 prose-strong:font-semibold
-                 prose-a:text-orange-500 prose-a:underline hover:prose-a:text-orange-600"
+                 prose-a:text-emerald-500 prose-a:underline hover:prose-a:text-emerald-600"
           v-html="content"
         />
       </div>

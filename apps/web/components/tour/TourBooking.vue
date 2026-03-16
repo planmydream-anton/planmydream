@@ -6,7 +6,7 @@
           <div class="grid md:grid-cols-2 gap-8 items-center">
             <!-- Left: Price & Dates -->
             <div>
-              <div class="text-orange-400 font-medium mb-2">Стоимость тура</div>
+              <div class="text-emerald-400 font-medium mb-2">Стоимость тура</div>
               <div class="text-5xl md:text-6xl font-bold text-white mb-4">
                 ${{ tour.priceFrom?.toLocaleString() }}
               </div>
@@ -58,7 +58,7 @@
                   type="text"
                   placeholder="Ваше имя"
                   required
-                  class="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder:text-white/40 focus:outline-none focus:border-orange-500 transition-colors"
+                  class="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder:text-white/40 focus:outline-none focus:border-emerald-500 transition-colors"
                 />
                 
                 <input
@@ -66,14 +66,14 @@
                   type="tel"
                   placeholder="Телефон"
                   required
-                  class="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder:text-white/40 focus:outline-none focus:border-orange-500 transition-colors"
+                  class="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder:text-white/40 focus:outline-none focus:border-emerald-500 transition-colors"
                 />
                 
                 <input
                   v-model="form.email"
                   type="email"
                   placeholder="Email"
-                  class="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder:text-white/40 focus:outline-none focus:border-orange-500 transition-colors"
+                  class="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder:text-white/40 focus:outline-none focus:border-emerald-500 transition-colors"
                 />
 
                 <div class="flex items-start gap-3">
@@ -82,18 +82,18 @@
                     v-model="form.privacyAccepted"
                     type="checkbox" 
                     required
-                    class="mt-1 w-4 h-4 rounded border-white/20 bg-white/10 text-orange-500 focus:ring-orange-500"
+                    class="mt-1 w-4 h-4 rounded border-white/20 bg-white/10 text-emerald-500 focus:ring-emerald-500"
                   />
                   <label for="privacy-booking" class="text-white/60 text-sm">
                     Я даю согласие на 
-                    <NuxtLink to="/privacy" class="text-orange-400 hover:underline">обработку персональных данных</NuxtLink>
+                    <NuxtLink to="/privacy" class="text-emerald-400 hover:underline">обработку персональных данных</NuxtLink>
                   </label>
                 </div>
 
                 <button
                   type="submit"
                   :disabled="isSubmitting"
-                  class="w-full bg-orange-500 hover:bg-orange-600 disabled:bg-orange-500/50 text-white py-4 rounded-xl font-medium transition-colors"
+                  class="w-full bg-emerald-500 hover:bg-emerald-600 disabled:bg-emerald-500/50 text-white py-4 rounded-xl font-medium transition-colors"
                 >
                   {{ isSubmitting ? 'Отправляем...' : 'Хочу в тур' }}
                 </button>

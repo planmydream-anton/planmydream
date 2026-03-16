@@ -40,7 +40,7 @@
     <!-- Content -->
     <div class="p-5">
       <!-- Title -->
-      <h3 class="text-lg font-bold text-zinc-900 mb-2 group-hover:text-orange-500 transition-colors line-clamp-2">
+      <h3 class="text-lg font-bold text-zinc-900 mb-2 group-hover:text-emerald-500 transition-colors line-clamp-2">
         {{ tour.title }}
       </h3>
       
@@ -79,7 +79,7 @@
           </div>
         </div>
         
-        <span class="inline-flex items-center gap-1 text-orange-500 font-medium text-sm">
+        <span class="inline-flex items-center gap-1 text-emerald-500 font-medium text-sm">
           Подробнее
           <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />

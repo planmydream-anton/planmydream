@@ -38,19 +38,19 @@
           <div class="space-y-3">
             <a 
               href="tel:+79315530887" 
-              class="block text-white/80 hover:text-orange-400 transition-colors"
+              class="block text-white/80 hover:text-emerald-400 transition-colors"
             >
               +7 (931) 553-08-87
             </a>
             <a 
               href="tel:+74951486416" 
-              class="block text-white/60 hover:text-orange-400 transition-colors text-sm"
+              class="block text-white/60 hover:text-emerald-400 transition-colors text-sm"
             >
               +7 (495) 148-64-16
             </a>
             <a 
               href="mailto:info@planmydream.ru" 
-              class="block text-white/60 hover:text-orange-400 transition-colors text-sm"
+              class="block text-white/60 hover:text-emerald-400 transition-colors text-sm"
             >
               info@planmydream.ru
             </a>
@@ -65,7 +65,7 @@
               href="https://t.me/planmydream" 
               target="_blank" 
               rel="noopener"
-              class="w-10 h-10 bg-white/10 hover:bg-orange-500 rounded-lg flex items-center justify-center transition-colors"
+              class="w-10 h-10 bg-white/10 hover:bg-emerald-500 rounded-lg flex items-center justify-center transition-colors"
               aria-label="Telegram"
             >
               <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">

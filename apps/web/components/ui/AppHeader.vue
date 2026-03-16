@@ -1,51 +1,50 @@
 <template>
-  <header class="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-md">
+  <header class="fixed top-0 left-0 right-0 z-50 bg-white border-b border-gray-100">
     <div class="container mx-auto px-4">
       <div class="flex items-center justify-between h-16 md:h-20">
         <!-- Logo -->
         <NuxtLink to="/" class="flex-shrink-0">
-          <img 
-            src="/logo.png" 
-            alt="Plan My Dream" 
+          <img
+            src="/logo.png"
+            alt="Plan My Dream"
             class="h-8 md:h-10 w-auto"
           />
         </NuxtLink>
 
         <!-- Desktop Navigation -->
         <nav class="hidden lg:flex items-center gap-8">
-          <NuxtLink 
-            v-for="item in navItems" 
+          <NuxtLink
+            v-for="item in navItems"
             :key="item.href"
             :to="item.href"
-            class="text-white/80 hover:text-white transition-colors text-sm font-medium"
+            class="text-gray-700 hover:text-gray-900 transition-colors text-sm font-medium"
           >
             {{ item.label }}
           </NuxtLink>
         </nav>
 
-        <!-- Phone numbers + CTA -->
+        <!-- Phone numbers -->
         <div class="hidden md:flex items-center gap-6">
           <div class="text-right">
-            <a href="tel:+79315530887" class="block text-white text-sm hover:text-orange-400 transition-colors">
-              +7 (931) 553-08-87
+            <a href="tel:+79315530887" class="flex items-center gap-1.5 text-gray-900 text-sm font-medium hover:text-emerald-600 transition-colors">
+              <svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+              </svg>
+              +7 (931) 553 08 87
             </a>
-            <a href="tel:+74951486416" class="block text-white/70 text-xs hover:text-orange-400 transition-colors">
-              +7 (495) 148-64-16
+            <a href="tel:+74951486416" class="flex items-center gap-1.5 text-gray-500 text-xs hover:text-emerald-600 transition-colors mt-0.5">
+              <svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+              </svg>
+              +7 (495) 148 64 16
             </a>
           </div>
-          
-          <button 
-            @click="openInquiryModal"
-            class="bg-orange-500 hover:bg-orange-600 text-white px-5 py-2.5 rounded-lg text-sm font-medium transition-colors"
-          >
-            Связаться
-          </button>
         </div>
 
         <!-- Mobile menu button -->
-        <button 
+        <button
           @click="isMobileMenuOpen = !isMobileMenuOpen"
-          class="lg:hidden text-white p-2"
+          class="lg:hidden text-gray-700 p-2"
           aria-label="Меню"
         >
           <svg v-if="!isMobileMenuOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -67,31 +66,34 @@
       leave-from-class="opacity-100 translate-y-0"
       leave-to-class="opacity-0 -translate-y-2"
     >
-      <div 
-        v-if="isMobileMenuOpen" 
-        class="lg:hidden bg-black/95 backdrop-blur-md border-t border-white/10"
+      <div
+        v-if="isMobileMenuOpen"
+        class="lg:hidden bg-white border-t border-gray-100 shadow-lg"
       >
         <nav class="container mx-auto px-4 py-4 space-y-3">
-          <NuxtLink 
-            v-for="item in navItems" 
+          <NuxtLink
+            v-for="item in navItems"
             :key="item.href"
             :to="item.href"
-            class="block text-white/80 hover:text-white py-2 text-base"
+            class="block text-gray-700 hover:text-gray-900 py-2 text-base"
             @click="isMobileMenuOpen = false"
           >
             {{ item.label }}
           </NuxtLink>
-          
-          <div class="pt-4 border-t border-white/10 space-y-2">
-            <a href="tel:+79315530887" class="block text-white text-base">
-              +7 (931) 553-08-87
+
+          <div class="pt-4 border-t border-gray-100 space-y-2">
+            <a href="tel:+79315530887" class="flex items-center gap-2 text-gray-900 text-base">
+              <svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+              </svg>
+              +7 (931) 553 08 87
             </a>
-            <button 
-              @click="openInquiryModal"
-              class="w-full bg-orange-500 hover:bg-orange-600 text-white py-3 rounded-lg text-base font-medium transition-colors"
-            >
-              Связаться
-            </button>
+            <a href="tel:+74951486416" class="flex items-center gap-2 text-gray-500 text-base">
+              <svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+              </svg>
+              +7 (495) 148 64 16
+            </a>
           </div>
         </nav>
       </div>
@@ -103,10 +105,10 @@
 const isMobileMenuOpen = ref(false)
 
 const navItems = [
-  { label: 'Туры', href: '/tours' },
-  { label: 'Направления', href: '/destinations' },
-  { label: 'О нас', href: '/about' },
+  { label: 'Актуальные туры', href: '/tours' },
+  { label: 'Преимущества', href: '/#advantages' },
   { label: 'Отзывы', href: '/reviews' },
+  { label: 'О нас', href: '/about' },
   { label: 'Фотоотчеты', href: '/memories' },
   { label: 'FAQ', href: '/faq' },
 ]

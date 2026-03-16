@@ -1,67 +1,89 @@
 <template>
-  <div class="container mx-auto px-4 pt-6 pb-4">
+  <div class="container mx-auto px-4 pt-6 pb-2">
     <!-- Tour title -->
-    <h1 class="text-2xl md:text-3xl lg:text-4xl font-bold text-neutral-900 leading-tight mb-4">
+    <h1 class="text-2xl md:text-3xl lg:text-4xl font-extrabold text-gray-900 leading-tight mb-3">
       {{ tour.title }}
     </h1>
 
-    <!-- Characteristic badges row -->
-    <div class="flex flex-wrap items-center gap-2 md:gap-3 text-sm text-neutral-600">
-      <!-- Duration: days (nights) -->
-      <div class="inline-flex items-center gap-1.5">
-        <svg class="w-4 h-4 text-orange-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-        </svg>
-        <span class="font-medium">
-          {{ tour.durationDays }} {{ pluralizeDays(tour.durationDays) }}
-          <template v-if="nightsCount">({{ nightsCount }} {{ pluralizeNights(nightsCount) }})</template>
-        </span>
+    <!-- Subtitle / tagline -->
+    <p v-if="tour.subtitle" class="text-base md:text-lg text-gray-600 leading-relaxed mb-6 max-w-4xl">
+      {{ tour.subtitle }}
+    </p>
+
+    <!-- Info card (like Figma) -->
+    <div class="bg-gray-50 rounded-2xl border border-gray-100 p-5 md:p-6 mb-4">
+      <!-- Top row: Route + Duration -->
+      <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-5 pb-5 border-b border-gray-200">
+        <!-- Route -->
+        <div v-if="tour.routeCities" class="flex-1">
+          <div class="text-sm text-gray-500 mb-1">Маршрут:</div>
+          <div class="text-base md:text-lg font-bold text-gray-900">
+            {{ tour.routeCities }}
+          </div>
+        </div>
+        <!-- Duration -->
+        <div class="flex-shrink-0">
+          <div class="text-sm text-gray-500 mb-1">Длительность:</div>
+          <div class="text-base md:text-lg font-bold text-gray-900">
+            {{ tour.durationDays }} {{ pluralizeDays(tour.durationDays) }}
+          </div>
+        </div>
       </div>
 
-      <span class="text-neutral-300">•</span>
+      <!-- Bottom row: Difficulty, Comfort, Group, Extra -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+        <!-- Difficulty -->
+        <div v-if="tour.difficulty">
+          <div class="flex items-center gap-1.5 text-sm text-gray-500 mb-1.5">
+            Сложность:
+            <span class="w-4 h-4 rounded-full bg-gray-200 text-gray-500 text-[10px] font-bold flex items-center justify-center cursor-help" :title="difficultyHints[tour.difficulty]">?</span>
+          </div>
+          <div class="text-sm font-semibold text-gray-900 mb-1">{{ difficultyLabels[tour.difficulty] }}</div>
+          <div class="flex gap-1">
+            <span
+              v-for="i in 5"
+              :key="i"
+              class="w-2.5 h-2.5 rounded-full"
+              :class="i <= difficultyLevel[tour.difficulty] ? 'bg-emerald-500' : 'bg-gray-300'"
+            />
+          </div>
+          <a href="#program" class="text-emerald-500 text-xs font-medium hover:underline mt-1 inline-block">К маршруту</a>
+        </div>
 
-      <!-- Difficulty -->
-      <div
-        v-if="tour.difficulty"
-        class="inline-flex items-center gap-1.5"
-      >
-        <span
-          class="w-2 h-2 rounded-full"
-          :class="{
-            'bg-green-500': tour.difficulty === 'easy',
-            'bg-yellow-500': tour.difficulty === 'medium',
-            'bg-orange-500': tour.difficulty === 'hard',
-            'bg-red-500': tour.difficulty === 'extreme',
-          }"
-        />
-        <span class="font-medium">{{ difficultyLabels[tour.difficulty] }}</span>
-      </div>
+        <!-- Comfort -->
+        <div v-if="tour.comfortLevel">
+          <div class="flex items-center gap-1.5 text-sm text-gray-500 mb-1.5">
+            Комфорт:
+            <span class="w-4 h-4 rounded-full bg-gray-200 text-gray-500 text-[10px] font-bold flex items-center justify-center cursor-help" :title="comfortHints[tour.comfortLevel]">?</span>
+          </div>
+          <div class="text-sm font-semibold text-gray-900 mb-1">{{ comfortLabels[tour.comfortLevel] }}</div>
+          <div class="flex gap-1">
+            <span
+              v-for="i in 5"
+              :key="i"
+              class="w-2.5 h-2.5 rounded-full"
+              :class="i <= comfortLevel[tour.comfortLevel] ? 'bg-emerald-500' : 'bg-gray-300'"
+            />
+          </div>
+          <a href="#accommodation" class="text-emerald-500 text-xs font-medium hover:underline mt-1 inline-block">К проживанию</a>
+        </div>
 
-      <span v-if="tour.difficulty" class="text-neutral-300">•</span>
+        <!-- Group -->
+        <div v-if="tour.groupSizeMin || tour.groupSizeMax">
+          <div class="text-sm text-gray-500 mb-1.5">Группа:</div>
+          <div class="text-sm font-semibold text-gray-900">
+            {{ groupSizeLabel }}<template v-if="tour.minAge">,<br>от {{ tour.minAge }} лет</template>
+          </div>
+        </div>
 
-      <!-- Comfort level -->
-      <div v-if="tour.comfortLevel" class="inline-flex items-center gap-1.5">
-        <svg class="w-4 h-4 text-amber-400 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
-          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-        </svg>
-        <span class="font-medium">{{ comfortLabels[tour.comfortLevel] }}</span>
-      </div>
-
-      <span v-if="tour.comfortLevel" class="text-neutral-300">•</span>
-
-      <!-- Group size -->
-      <div v-if="tour.groupSizeMin || tour.groupSizeMax" class="inline-flex items-center gap-1.5">
-        <svg class="w-4 h-4 text-blue-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
-        </svg>
-        <span class="font-medium">{{ groupSizeLabel }}</span>
-      </div>
-
-      <span v-if="tour.minAge" class="text-neutral-300">•</span>
-
-      <!-- Min age -->
-      <div v-if="tour.minAge" class="inline-flex items-center gap-1.5">
-        <span class="font-medium">от {{ tour.minAge }}+</span>
+        <!-- Optional extension (if exists) -->
+        <div v-if="tour.extensionInfo" class="border border-emerald-200 bg-emerald-50 rounded-xl p-3">
+          <div class="flex items-center gap-1.5 text-sm text-gray-500 mb-1">
+            Опциональное продолжение:
+            <span class="w-4 h-4 rounded-full bg-emerald-500 text-white text-[10px] font-bold flex items-center justify-center">!</span>
+          </div>
+          <div class="text-sm font-bold text-gray-900">{{ tour.extensionInfo }}</div>
+        </div>
       </div>
     </div>
   </div>
@@ -74,13 +96,7 @@ const props = defineProps<{
   tour: Tour
 }>()
 
-// Nights = days - 1
-const nightsCount = computed(() => {
-  if (!props.tour.durationDays) return 0
-  return props.tour.durationDays - 1
-})
-
-// Difficulty labels
+// Difficulty
 const difficultyLabels: Record<string, string> = {
   easy: 'Легкий',
   medium: 'Средний',
@@ -88,25 +104,53 @@ const difficultyLabels: Record<string, string> = {
   extreme: 'Экстремальный',
 }
 
-// Comfort level labels
+const difficultyLevel: Record<string, number> = {
+  easy: 1,
+  medium: 2,
+  hard: 3,
+  extreme: 5,
+}
+
+const difficultyHints: Record<string, string> = {
+  easy: 'Подходит для всех возрастов, минимальные физические нагрузки',
+  medium: 'Умеренные пешие прогулки, базовая физическая подготовка',
+  hard: 'Длительные пешие маршруты, требуется хорошая физическая форма',
+  extreme: 'Экстремальные условия, требуется специальная подготовка',
+}
+
+// Comfort
 const comfortLabels: Record<string, string> = {
   basic: 'Базовый',
   standard: 'Стандарт',
-  comfort: 'Комфорт',
+  comfort: 'Оптимальный',
   luxury: 'Люкс',
 }
 
-// Group size label
+const comfortLevel: Record<string, number> = {
+  basic: 1,
+  standard: 2,
+  comfort: 3,
+  luxury: 5,
+}
+
+const comfortHints: Record<string, string> = {
+  basic: 'Хостелы и базовые гостиницы',
+  standard: 'Хорошие 3* отели',
+  comfort: '4* отели, удобный транспорт',
+  luxury: '5* отели, VIP сервис',
+}
+
+// Group size
 const groupSizeLabel = computed(() => {
   const min = props.tour.groupSizeMin
   const max = props.tour.groupSizeMax
-  if (min && max) return `${min}-${max} чел.`
-  if (min) return `от ${min} чел.`
-  if (max) return `до ${max} чел.`
+  if (min && max) return `${min}–${max} человек`
+  if (min) return `от ${min} человек`
+  if (max) return `до ${max} человек`
   return ''
 })
 
-// Russian pluralization for days
+// Pluralization
 function pluralizeDays(n: number): string {
   const mod10 = n % 10
   const mod100 = n % 100
@@ -114,15 +158,5 @@ function pluralizeDays(n: number): string {
   if (mod10 === 1) return 'день'
   if (mod10 >= 2 && mod10 <= 4) return 'дня'
   return 'дней'
-}
-
-// Russian pluralization for nights
-function pluralizeNights(n: number): string {
-  const mod10 = n % 10
-  const mod100 = n % 100
-  if (mod100 >= 11 && mod100 <= 14) return 'ночей'
-  if (mod10 === 1) return 'ночь'
-  if (mod10 >= 2 && mod10 <= 4) return 'ночи'
-  return 'ночей'
 }
 </script>

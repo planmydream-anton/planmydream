@@ -1,5 +1,5 @@
 <template>
-  <section class="py-16 md:py-24 bg-gradient-to-br from-orange-500 to-orange-600">
+  <section class="py-16 md:py-24 bg-gradient-to-br from-emerald-500 to-emerald-600">
     <div class="container mx-auto px-4">
       <div class="max-w-4xl mx-auto">
         <div class="grid md:grid-cols-2 gap-10 items-center">
@@ -84,7 +84,7 @@
                   type="text"
                   placeholder="Ваше имя"
                   required
-                  class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 outline-none transition-colors"
+                  class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 outline-none transition-colors"
                 />
               </div>
               
@@ -94,7 +94,7 @@
                   type="tel"
                   placeholder="Телефон"
                   required
-                  class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 outline-none transition-colors"
+                  class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 outline-none transition-colors"
                 />
               </div>
               
@@ -103,7 +103,7 @@
                   v-model="form.email"
                   type="email"
                   placeholder="Email"
-                  class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 outline-none transition-colors"
+                  class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 outline-none transition-colors"
                 />
               </div>
               
@@ -112,7 +112,7 @@
                   v-model="form.message"
                   placeholder="Комментарий"
                   rows="3"
-                  class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 outline-none transition-colors resize-none"
+                  class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 outline-none transition-colors resize-none"
                 />
               </div>
 
@@ -122,20 +122,20 @@
                   type="checkbox"
                   required
                   id="consent"
-                  class="mt-1 rounded border-gray-300 text-orange-500 focus:ring-orange-500"
+                  class="mt-1 rounded border-gray-300 text-emerald-500 focus:ring-emerald-500"
                 />
                 <label for="consent" class="text-sm text-gray-600">
                   Я даю согласие на 
-                  <NuxtLink to="/privacy" class="text-orange-500 hover:underline">обработку персональных данных</NuxtLink>
+                  <NuxtLink to="/privacy" class="text-emerald-500 hover:underline">обработку персональных данных</NuxtLink>
                   в соответствии с 
-                  <NuxtLink to="/conf-policy" class="text-orange-500 hover:underline">политикой конфиденциальности</NuxtLink>
+                  <NuxtLink to="/conf-policy" class="text-emerald-500 hover:underline">политикой конфиденциальности</NuxtLink>
                 </label>
               </div>
 
               <button
                 type="submit"
                 :disabled="isSubmitting"
-                class="w-full bg-orange-500 hover:bg-orange-600 disabled:bg-orange-300 text-white py-3 rounded-xl font-medium transition-colors"
+                class="w-full bg-emerald-500 hover:bg-emerald-600 disabled:bg-emerald-300 text-white py-3 rounded-xl font-medium transition-colors"
               >
                 {{ isSubmitting ? 'Отправка...' : 'Отправить заявку' }}
               </button>

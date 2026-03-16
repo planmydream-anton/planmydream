@@ -58,7 +58,7 @@
                   type="text"
                   placeholder="Ваше имя"
                   required
-                  class="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder:text-white/40 focus:outline-none focus:border-orange-500 transition-colors"
+                  class="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder:text-white/40 focus:outline-none focus:border-emerald-500 transition-colors"
                 />
               </div>
               
@@ -68,7 +68,7 @@
                   type="tel"
                   placeholder="Телефон"
                   required
-                  class="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder:text-white/40 focus:outline-none focus:border-orange-500 transition-colors"
+                  class="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder:text-white/40 focus:outline-none focus:border-emerald-500 transition-colors"
                 />
               </div>
               
@@ -77,7 +77,7 @@
                   v-model="form.email"
                   type="email"
                   placeholder="Email"
-                  class="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder:text-white/40 focus:outline-none focus:border-orange-500 transition-colors"
+                  class="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder:text-white/40 focus:outline-none focus:border-emerald-500 transition-colors"
                 />
               </div>
 
@@ -86,7 +86,7 @@
                   v-model="form.message"
                   placeholder="Комментарий (необязательно)"
                   rows="3"
-                  class="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder:text-white/40 focus:outline-none focus:border-orange-500 transition-colors resize-none"
+                  class="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder:text-white/40 focus:outline-none focus:border-emerald-500 transition-colors resize-none"
                 />
               </div>
 
@@ -96,18 +96,18 @@
                   v-model="form.privacyAccepted"
                   type="checkbox" 
                   required
-                  class="mt-1 w-4 h-4 rounded border-white/20 bg-white/10 text-orange-500 focus:ring-orange-500"
+                  class="mt-1 w-4 h-4 rounded border-white/20 bg-white/10 text-emerald-500 focus:ring-emerald-500"
                 />
                 <label for="privacy" class="text-white/60 text-sm">
                   Я даю согласие на 
-                  <NuxtLink to="/privacy" class="text-orange-400 hover:underline">обработку персональных данных</NuxtLink>
+                  <NuxtLink to="/privacy" class="text-emerald-400 hover:underline">обработку персональных данных</NuxtLink>
                 </label>
               </div>
 
               <button
                 type="submit"
                 :disabled="isSubmitting"
-                class="w-full bg-orange-500 hover:bg-orange-600 disabled:bg-orange-500/50 text-white py-3 rounded-lg font-medium transition-colors flex items-center justify-center gap-2"
+                class="w-full bg-emerald-500 hover:bg-emerald-600 disabled:bg-emerald-500/50 text-white py-3 rounded-lg font-medium transition-colors flex items-center justify-center gap-2"
               >
                 <svg v-if="isSubmitting" class="w-5 h-5 animate-spin" viewBox="0 0 24 24">
                   <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none" />
@@ -136,7 +136,7 @@
                 <p class="text-white/60 mb-6">Мы свяжемся с вами в ближайшее время</p>
                 <button 
                   @click="closeModal"
-                  class="text-orange-400 hover:text-orange-300 transition-colors"
+                  class="text-emerald-400 hover:text-emerald-300 transition-colors"
                 >
                   Закрыть
                 </button>

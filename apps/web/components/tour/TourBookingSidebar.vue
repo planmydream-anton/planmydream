@@ -1,102 +1,120 @@
 <template>
   <!-- Desktop: Sticky sidebar -->
   <div class="hidden lg:block">
-    <div class="sticky top-24 bg-white rounded-2xl shadow-lg border border-gray-200 p-6">
-      <!-- Price -->
-      <div class="mb-4">
-        <div class="text-sm text-gray-500 mb-1">Стоимость от</div>
-        <div class="flex items-baseline gap-2">
-          <span v-if="tour.discountPercent" class="text-lg text-gray-400 line-through">
-            {{ formatPrice(originalPrice) }}
-          </span>
-          <span class="text-3xl font-bold text-gray-900">
-            {{ formatPrice(tour.priceFrom) }}
-          </span>
+    <div class="sticky top-24 bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
+      <!-- Price row -->
+      <div class="flex items-center divide-x divide-gray-200">
+        <!-- Price -->
+        <div class="flex-1 p-5">
+          <div class="flex items-baseline gap-2">
+            <span class="text-2xl font-extrabold text-gray-900">
+              {{ formatPrice(tour.priceFrom) }}
+            </span>
+            <span v-if="tour.discountPercent" class="text-base text-gray-400 line-through">
+              {{ formatPrice(originalPrice) }}
+            </span>
+          </div>
+          <a href="#includes" class="text-emerald-500 text-xs font-medium hover:underline">Что включено</a>
         </div>
-        <div v-if="tour.discountPercent" class="text-sm text-green-600 font-medium mt-1">
-          Скидка {{ tour.discountPercent }}%
+
+        <!-- Date -->
+        <div v-if="nextDeparture" class="flex-1 p-5">
+          <div class="text-base font-bold text-gray-900">
+            {{ formatDateRange(nextDeparture.startDate, nextDeparture.endDate) }}
+          </div>
+          <div class="text-xs text-gray-500 mt-0.5">
+            ({{ nextDeparture.spotsLeft }} {{ pluralize(nextDeparture.spotsLeft, 'место', 'места', 'мест') }})
+          </div>
         </div>
       </div>
 
-      <!-- Spots info -->
-      <div v-if="nextDeparture" class="mb-4 bg-orange-50 rounded-lg px-4 py-3">
-        <div class="text-sm text-gray-700">
-          <span class="font-medium">{{ nextDeparture.spotsLeft }}</span>
-          {{ pluralize(nextDeparture.spotsLeft, 'место', 'места', 'мест') }} осталось
-        </div>
-        <div class="text-xs text-gray-500 mt-1">
-          Ближайший выезд: {{ formatDate(nextDeparture.startDate) }}
-        </div>
-      </div>
-
-      <!-- Departure select -->
-      <div v-if="activeDepartures.length > 1" class="mb-4">
-        <label class="text-sm text-gray-600 mb-1 block">Выберите дату</label>
-        <select
-          v-model="selectedDepartureId"
-          class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-        >
-          <option v-for="dep in activeDepartures" :key="dep.id" :value="dep.id">
-            {{ formatDateRange(dep.startDate, dep.endDate) }} — {{ formatPrice(dep.price) }}
-            ({{ dep.spotsLeft }} {{ pluralize(dep.spotsLeft, 'место', 'места', 'мест') }})
-          </option>
-        </select>
-      </div>
-
-      <!-- Form -->
-      <form v-if="!isSuccess" @submit.prevent="handleSubmit" class="space-y-3">
-        <input
-          v-model="form.name"
-          type="text"
-          placeholder="Ваше имя"
-          required
-          class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-        />
-        <input
-          v-model="form.phone"
-          type="tel"
-          placeholder="Телефон"
-          required
-          class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-        />
-        <input
-          v-model="form.email"
-          type="email"
-          placeholder="Email"
-          class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-        />
-
-        <div class="flex items-start gap-2">
-          <input
-            id="privacy-sidebar"
-            v-model="form.privacyAccepted"
-            type="checkbox"
-            required
-            class="mt-0.5 w-4 h-4 rounded border-gray-300 text-orange-500 focus:ring-orange-500"
-          />
-          <label for="privacy-sidebar" class="text-xs text-gray-500">
-            Согласие на <NuxtLink to="/privacy" class="text-orange-500 hover:underline">обработку данных</NuxtLink>
-          </label>
-        </div>
-
+      <!-- Book button -->
+      <div class="px-5 pb-5">
         <button
-          type="submit"
-          :disabled="isSubmitting"
-          class="w-full bg-orange-500 hover:bg-orange-600 disabled:bg-orange-400 text-white py-3 rounded-xl font-medium transition-colors"
+          @click="showDesktopForm = !showDesktopForm"
+          class="w-full bg-emerald-500 hover:bg-emerald-600 text-white py-3.5 rounded-full font-semibold text-base transition-colors"
         >
-          {{ isSubmitting ? 'Отправляем...' : 'Забронировать' }}
+          Забронировать
         </button>
-      </form>
-
-      <!-- Success -->
-      <div v-else class="bg-green-50 border border-green-200 rounded-lg p-4 text-center">
-        <div class="text-green-700 font-medium">Заявка отправлена!</div>
-        <div class="text-green-600 text-sm mt-1">Мы скоро свяжемся с вами</div>
+        <p class="text-xs text-gray-400 text-center mt-2">Не требует оплаты сейчас</p>
       </div>
 
-      <p class="text-xs text-gray-400 text-center mt-3">
-        Оплата сейчас не требуется
-      </p>
+      <!-- Form (expandable) -->
+      <Transition
+        enter-active-class="transition-all duration-300 ease-out"
+        enter-from-class="max-h-0 opacity-0"
+        enter-to-class="max-h-[600px] opacity-100"
+        leave-active-class="transition-all duration-200 ease-in"
+        leave-from-class="max-h-[600px] opacity-100"
+        leave-to-class="max-h-0 opacity-0"
+      >
+        <div v-show="showDesktopForm" class="overflow-hidden border-t border-gray-100">
+          <div class="p-5">
+            <!-- Departure select -->
+            <div v-if="activeDepartures.length > 1" class="mb-4">
+              <label class="text-sm text-gray-600 mb-1 block">Выберите дату</label>
+              <select
+                v-model="selectedDepartureId"
+                class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+              >
+                <option v-for="dep in activeDepartures" :key="dep.id" :value="dep.id">
+                  {{ formatDateRange(dep.startDate, dep.endDate) }} — {{ formatPrice(dep.price) }}
+                </option>
+              </select>
+            </div>
+
+            <form v-if="!isSuccess" @submit.prevent="handleSubmit" class="space-y-3">
+              <input
+                v-model="form.name"
+                type="text"
+                placeholder="Ваше имя"
+                required
+                class="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+              />
+              <input
+                v-model="form.phone"
+                type="tel"
+                placeholder="+7 (000) 000-00-00"
+                required
+                class="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+              />
+              <input
+                v-model="form.email"
+                type="email"
+                placeholder="Email"
+                class="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+              />
+
+              <div class="flex items-start gap-2">
+                <input
+                  id="privacy-sidebar"
+                  v-model="form.privacyAccepted"
+                  type="checkbox"
+                  required
+                  class="mt-0.5 w-4 h-4 rounded border-gray-300 text-emerald-500 focus:ring-emerald-500"
+                />
+                <label for="privacy-sidebar" class="text-xs text-gray-500">
+                  Согласие на <NuxtLink to="/privacy" class="text-emerald-500 hover:underline">обработку данных</NuxtLink>
+                </label>
+              </div>
+
+              <button
+                type="submit"
+                :disabled="isSubmitting"
+                class="w-full bg-emerald-500 hover:bg-emerald-600 disabled:bg-emerald-400 text-white py-3.5 rounded-full font-semibold transition-colors"
+              >
+                {{ isSubmitting ? 'Отправляем...' : 'Отправить заявку' }}
+              </button>
+            </form>
+
+            <!-- Success -->
+            <div v-else class="bg-emerald-50 border border-emerald-200 rounded-lg p-4 text-center">
+              <div class="text-emerald-700 font-medium">Заявка отправлена!</div>
+              <div class="text-emerald-600 text-sm mt-1">Мы скоро свяжемся с вами</div>
+            </div>
+          </div>
+        </div>
+      </Transition>
     </div>
   </div>
 
@@ -104,12 +122,15 @@
   <div class="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-gray-200 shadow-lg px-4 py-3 safe-area-bottom">
     <div class="flex items-center justify-between">
       <div>
-        <div class="text-xs text-gray-500">от</div>
-        <div class="text-xl font-bold text-gray-900">{{ formatPrice(tour.priceFrom) }}</div>
+        <div class="flex items-baseline gap-1.5">
+          <span class="text-xl font-extrabold text-gray-900">{{ formatPrice(tour.priceFrom) }}</span>
+          <span v-if="tour.discountPercent" class="text-sm text-gray-400 line-through">{{ formatPrice(originalPrice) }}</span>
+        </div>
+        <div v-if="nextDeparture" class="text-xs text-gray-500">{{ formatDateRange(nextDeparture.startDate, nextDeparture.endDate) }}</div>
       </div>
       <button
         @click="showMobileForm = true"
-        class="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2.5 rounded-xl font-medium transition-colors"
+        class="bg-emerald-500 hover:bg-emerald-600 text-white px-6 py-2.5 rounded-full font-semibold transition-colors"
       >
         Забронировать
       </button>
@@ -140,8 +161,8 @@
           <!-- Price in modal -->
           <div class="mb-4">
             <div class="flex items-baseline gap-2">
-              <span class="text-2xl font-bold text-gray-900">{{ formatPrice(tour.priceFrom) }}</span>
-              <span v-if="tour.discountPercent" class="text-sm text-green-600">-{{ tour.discountPercent }}%</span>
+              <span class="text-2xl font-extrabold text-gray-900">{{ formatPrice(tour.priceFrom) }}</span>
+              <span v-if="tour.discountPercent" class="text-base text-gray-400 line-through">{{ formatPrice(originalPrice) }}</span>
             </div>
           </div>
 
@@ -149,7 +170,7 @@
           <div v-if="activeDepartures.length" class="mb-4">
             <select
               v-model="selectedDepartureId"
-              class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
+              class="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
             >
               <option v-for="dep in activeDepartures" :key="dep.id" :value="dep.id">
                 {{ formatDateRange(dep.startDate, dep.endDate) }} — {{ formatPrice(dep.price) }}
@@ -159,28 +180,28 @@
 
           <!-- Form in modal -->
           <form v-if="!isSuccess" @submit.prevent="handleSubmit" class="space-y-3">
-            <input v-model="form.name" type="text" placeholder="Ваше имя" required class="w-full border border-gray-300 rounded-lg px-3 py-3 focus:outline-none focus:ring-2 focus:ring-orange-500" />
-            <input v-model="form.phone" type="tel" placeholder="Телефон" required class="w-full border border-gray-300 rounded-lg px-3 py-3 focus:outline-none focus:ring-2 focus:ring-orange-500" />
-            <input v-model="form.email" type="email" placeholder="Email" class="w-full border border-gray-300 rounded-lg px-3 py-3 focus:outline-none focus:ring-2 focus:ring-orange-500" />
+            <input v-model="form.name" type="text" placeholder="Ваше имя" required class="w-full border border-gray-200 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-emerald-500" />
+            <input v-model="form.phone" type="tel" placeholder="+7 (000) 000-00-00" required class="w-full border border-gray-200 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-emerald-500" />
+            <input v-model="form.email" type="email" placeholder="Email" class="w-full border border-gray-200 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-emerald-500" />
 
             <div class="flex items-start gap-2">
-              <input id="privacy-mobile" v-model="form.privacyAccepted" type="checkbox" required class="mt-0.5 w-4 h-4 rounded border-gray-300 text-orange-500 focus:ring-orange-500" />
+              <input id="privacy-mobile" v-model="form.privacyAccepted" type="checkbox" required class="mt-0.5 w-4 h-4 rounded border-gray-300 text-emerald-500 focus:ring-emerald-500" />
               <label for="privacy-mobile" class="text-xs text-gray-500">
-                Согласие на <NuxtLink to="/privacy" class="text-orange-500 hover:underline">обработку данных</NuxtLink>
+                Согласие на <NuxtLink to="/privacy" class="text-emerald-500 hover:underline">обработку данных</NuxtLink>
               </label>
             </div>
 
-            <button type="submit" :disabled="isSubmitting" class="w-full bg-orange-500 hover:bg-orange-600 disabled:bg-orange-400 text-white py-3.5 rounded-xl font-medium transition-colors">
-              {{ isSubmitting ? 'Отправляем...' : 'Забронировать' }}
+            <button type="submit" :disabled="isSubmitting" class="w-full bg-emerald-500 hover:bg-emerald-600 disabled:bg-emerald-400 text-white py-3.5 rounded-full font-semibold transition-colors">
+              {{ isSubmitting ? 'Отправляем...' : 'Отправить заявку' }}
             </button>
           </form>
 
-          <div v-else class="bg-green-50 border border-green-200 rounded-lg p-4 text-center">
-            <div class="text-green-700 font-medium">Заявка отправлена!</div>
-            <div class="text-green-600 text-sm mt-1">Мы скоро свяжемся с вами</div>
+          <div v-else class="bg-emerald-50 border border-emerald-200 rounded-lg p-4 text-center">
+            <div class="text-emerald-700 font-medium">Заявка отправлена!</div>
+            <div class="text-emerald-600 text-sm mt-1">Мы скоро свяжемся с вами</div>
           </div>
 
-          <p class="text-xs text-gray-400 text-center mt-3">Оплата сейчас не требуется</p>
+          <p class="text-xs text-gray-400 text-center mt-3">Не требует оплаты сейчас</p>
         </div>
       </div>
     </Transition>
@@ -201,6 +222,7 @@ const currencySymbols: Record<string, string> = {
   RUB: '\u20BD',
 }
 
+const showDesktopForm = ref(false)
 const showMobileForm = ref(false)
 const selectedDepartureId = ref('')
 const isSubmitting = ref(false)
@@ -219,7 +241,6 @@ const activeDepartures = computed(() =>
 
 const nextDeparture = computed(() => activeDepartures.value[0])
 
-// Set default selected departure
 watchEffect(() => {
   if (activeDepartures.value.length && !selectedDepartureId.value) {
     selectedDepartureId.value = activeDepartures.value[0].id
@@ -235,17 +256,22 @@ function formatPrice(price: number | string | undefined): string {
   if (!price) return ''
   const num = Number(price)
   const symbol = currencySymbols[props.tour.currency] || props.tour.currency
-  return `${num.toLocaleString('ru-RU')} ${symbol}`
-}
-
-function formatDate(date: string): string {
-  return new Date(date).toLocaleDateString('ru-RU', { day: 'numeric', month: 'short' })
+  return `${symbol}${num.toLocaleString('ru-RU')}`
 }
 
 function formatDateRange(start: string, end: string): string {
   const s = new Date(start)
   const e = new Date(end)
-  return `${s.getDate()}\u2013${e.getDate()} ${s.toLocaleDateString('ru-RU', { month: 'short' })} ${s.getFullYear()}`
+  const sDay = s.getDate()
+  const eDay = e.getDate()
+  const sMonth = s.toLocaleDateString('ru-RU', { month: 'long' })
+  const eMonth = e.toLocaleDateString('ru-RU', { month: 'long' })
+  const year = s.getFullYear()
+
+  if (sMonth === eMonth) {
+    return `${sDay} \u2014 ${eDay} ${sMonth} ${year}`
+  }
+  return `${sDay} ${s.toLocaleDateString('ru-RU', { month: 'short' })} \u2014 ${eDay} ${e.toLocaleDateString('ru-RU', { month: 'short' })} ${year}`
 }
 
 function pluralize(n: number, one: string, few: string, many: string): string {
@@ -278,6 +304,7 @@ async function handleSubmit() {
 
     isSuccess.value = true
     showMobileForm.value = false
+    showDesktopForm.value = false
     form.name = ''
     form.phone = ''
     form.email = ''

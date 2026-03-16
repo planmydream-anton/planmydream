@@ -14,7 +14,7 @@
           <!-- Step card -->
           <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/10 h-full">
             <!-- Step number -->
-            <div class="w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center mb-4">
+            <div class="w-10 h-10 bg-emerald-500 rounded-full flex items-center justify-center mb-4">
               <span class="text-white font-bold">{{ index + 1 }}</span>
             </div>
 
@@ -22,7 +22,7 @@
             <div class="mb-4">
               <component 
                 :is="step.icon" 
-                class="w-8 h-8 text-orange-400" 
+                class="w-8 h-8 text-emerald-400" 
               />
             </div>
 
@@ -42,7 +42,7 @@
             v-if="index < steps.length - 1" 
             class="hidden lg:block absolute top-1/2 -right-3 transform -translate-y-1/2 z-10"
           >
-            <svg class="w-6 h-6 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg class="w-6 h-6 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
             </svg>
           </div>
