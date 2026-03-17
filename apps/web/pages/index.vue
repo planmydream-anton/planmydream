@@ -379,21 +379,8 @@
     <!-- Team -->
     <TeamSection />
 
-    <!-- Reviews -->
-    <section class="py-16 md:py-20 bg-white">
-      <div class="container mx-auto px-4">
-        <div class="text-center mb-10">
-          <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
-            Отзывы путешественников
-          </h2>
-          <p class="text-gray-500 text-lg">
-            Что говорят те, кто уже отправился с нами
-          </p>
-        </div>
-
-        <ReviewsSection />
-      </div>
-    </section>
+    <!-- Yandex Reviews -->
+    <YandexReviews />
 
     <!-- FAQ -->
     <section class="py-16 md:py-20 bg-gray-50">
