@@ -25,9 +25,9 @@
               </div>
               <div 
                 v-else 
-                class="w-16 h-16 md:w-20 md:h-20 rounded-full bg-orange-100 flex items-center justify-center"
+                class="w-16 h-16 md:w-20 md:h-20 rounded-full bg-emerald-100 flex items-center justify-center"
               >
-                <span class="text-2xl font-bold text-orange-500">
+                <span class="text-2xl font-bold text-emerald-500">
                   {{ currentReview.authorName.charAt(0) }}
                 </span>
               </div>
@@ -85,7 +85,7 @@
               :key="index"
               @click="currentIndex = index"
               class="w-2 h-2 rounded-full transition-colors"
-              :class="index === currentIndex ? 'bg-orange-500' : 'bg-gray-300 hover:bg-gray-400'"
+              :class="index === currentIndex ? 'bg-emerald-500' : 'bg-gray-300 hover:bg-gray-400'"
             />
           </div>
 

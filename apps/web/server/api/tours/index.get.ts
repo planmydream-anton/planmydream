@@ -1,5 +1,5 @@
 import { db } from '~/server/utils/db'
-import { tours, departures, destinations } from '@planmydream/database/schema'
+import { tours, departures, destinations, tourMedia, media } from '@planmydream/database/schema'
 import { eq, and, ne, desc, asc, sql } from 'drizzle-orm'
 
 export default defineEventHandler(async (event) => {
@@ -74,11 +74,20 @@ export default defineEventHandler(async (event) => {
         spotsLeft: (d.spotsTotal || 0) - (d.spotsBooked || 0),
       }))
 
+      // Get cover image
+      const [cover] = await db
+        .select({ url: media.url, altText: media.altText })
+        .from(tourMedia)
+        .innerJoin(media, eq(tourMedia.mediaId, media.id))
+        .where(and(eq(tourMedia.tourId, tour.id), eq(tourMedia.isCover, true)))
+        .limit(1)
+
       return {
         ...tour,
+        coverImage: cover ? { url: cover.url, altText: cover.altText } : undefined,
         departures: departuresWithSpotsLeft,
         // Next available departure
-        nextDeparture: departuresWithSpotsLeft.find(d => 
+        nextDeparture: departuresWithSpotsLeft.find(d =>
           new Date(d.startDate) > new Date() && d.spotsLeft > 0
         ),
       }

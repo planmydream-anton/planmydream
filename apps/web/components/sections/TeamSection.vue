@@ -27,9 +27,9 @@
               </div>
               <div 
                 v-else 
-                class="w-20 h-20 rounded-full bg-orange-100 flex items-center justify-center"
+                class="w-20 h-20 rounded-full bg-emerald-100 flex items-center justify-center"
               >
-                <span class="text-2xl font-bold text-orange-500">
+                <span class="text-2xl font-bold text-emerald-500">
                   {{ member.name.charAt(0) }}
                 </span>
               </div>
@@ -40,7 +40,7 @@
               <h3 class="text-xl font-bold text-gray-900 mb-1">
                 {{ member.name }}
               </h3>
-              <div class="text-orange-500 text-sm font-medium mb-3">
+              <div class="text-emerald-500 text-sm font-medium mb-3">
                 {{ member.role }}
               </div>
             </div>

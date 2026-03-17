@@ -1,11 +1,7 @@
 <template>
-  <section id="faq" class="py-8 md:py-10">
+  <div id="faq">
     <div>
-      <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-6">
-        Часто задаваемые вопросы (FAQ)
-      </h2>
-
-      <div v-if="faqs?.length" class="max-w-3xl mx-auto space-y-4">
+      <div v-if="faqs?.length" class="max-w-3xl mx-auto space-y-3">
         <div 
           v-for="(faq, index) in faqs" 
           :key="faq.id"
@@ -55,7 +51,7 @@
         Загрузка...
       </div>
     </div>
-  </section>
+  </div>
 </template>
 
 <script setup lang="ts">
