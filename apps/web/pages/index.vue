@@ -122,7 +122,7 @@
     </section>
 
     <!-- Why Us — Advantages -->
-    <AdvantagesSection />
+    <SectionsAdvantagesSection />
 
     <!-- Stats Counter Section -->
     <section class="py-16 md:py-20 bg-gray-900 relative overflow-hidden">
@@ -244,7 +244,7 @@
     </Teleport>
 
     <!-- How to Book -->
-    <HowToBookSection />
+    <SectionsHowToBookSection />
 
     <!-- About Section -->
     <section id="about" class="py-16 md:py-20 bg-gray-50">
@@ -377,10 +377,10 @@
     </section>
 
     <!-- Team -->
-    <TeamSection />
+    <SectionsTeamSection />
 
     <!-- Yandex Reviews -->
-    <YandexReviews />
+    <SectionsYandexReviews />
 
     <!-- FAQ -->
     <section class="py-16 md:py-20 bg-gray-50">
@@ -393,12 +393,12 @@
             Ответы на популярные вопросы о наших турах
           </p>
         </div>
-        <FaqSection />
+        <SectionsFaqSection />
       </div>
     </section>
 
     <!-- Contact CTA Section -->
-    <ContactFormSection />
+    <SectionsContactFormSection />
   </div>
 </template>
 
