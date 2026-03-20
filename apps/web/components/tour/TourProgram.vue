@@ -63,7 +63,9 @@
                   :src="imgUrl"
                   :alt="`${day.title} - фото ${imgIdx + 1}`"
                   class="aspect-[4/3] w-full rounded-lg object-cover cursor-pointer hover:opacity-90 transition-opacity"
+                  sizes="(max-width: 640px) 33vw, (max-width: 768px) 25vw, 20vw"
                   loading="lazy"
+                  placeholder="[20, 15, 10]"
                 />
               </div>
             </div>

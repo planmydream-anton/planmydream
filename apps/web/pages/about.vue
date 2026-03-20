@@ -30,7 +30,9 @@
               :src="photo.url"
               :alt="photo.altText || 'Plan My Dream'"
               class="w-full h-full object-cover"
+              sizes="(max-width: 768px) 50vw, 25vw"
               loading="lazy"
+              placeholder="[20, 15, 10]"
             />
           </div>
         </div>

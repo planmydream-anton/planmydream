@@ -26,6 +26,7 @@
             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
             sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
             loading="lazy"
+            placeholder="[20, 15, 10]"
           />
           <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors" />
           
@@ -106,6 +107,7 @@
               :src="images[currentIndex].url"
               :alt="images[currentIndex].altText || ''"
               class="max-w-full max-h-[85vh] object-contain mx-auto"
+              sizes="100vw"
             />
             
             <!-- Caption -->

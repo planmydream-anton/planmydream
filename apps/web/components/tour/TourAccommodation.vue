@@ -34,11 +34,13 @@
                 class="flex-shrink-0 w-36 h-24 rounded-xl overflow-hidden border-2 border-transparent hover:border-emerald-400 focus:border-emerald-500 focus:outline-none transition-colors"
                 @click="openLightbox(item.images, imgIndex)"
               >
-                <img
+                <NuxtImg
                   :src="imgUrl"
                   :alt="`${item.name} - фото ${imgIndex + 1}`"
                   class="w-full h-full object-cover"
+                  sizes="150px"
                   loading="lazy"
+                  placeholder="[20, 15, 10]"
                 />
               </button>
             </div>
@@ -87,10 +89,11 @@
       </button>
 
       <!-- Image -->
-      <img
+      <NuxtImg
         :src="lightbox.images[lightbox.index]"
         alt="Фото размещения"
         class="max-w-[90vw] max-h-[85vh] object-contain rounded-xl shadow-2xl"
+        sizes="100vw"
       />
 
       <!-- Next button -->

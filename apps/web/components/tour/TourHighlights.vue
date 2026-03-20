@@ -54,6 +54,7 @@
             :class="hoveredIndex === index && getImageUrl(highlight, 1) ? 'opacity-0' : 'opacity-100'"
             sizes="320px"
             loading="lazy"
+            placeholder="[20, 15, 10]"
           />
           <!-- Second image (shown on hover) -->
           <NuxtImg
@@ -64,6 +65,7 @@
             :class="hoveredIndex === index ? 'opacity-100' : 'opacity-0'"
             sizes="320px"
             loading="lazy"
+            placeholder="[20, 15, 10]"
           />
           <!-- No image placeholder -->
           <div v-if="!getImageUrl(highlight, 0)" class="w-full h-full flex items-center justify-center">

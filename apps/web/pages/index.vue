@@ -14,11 +14,15 @@
           leave-from-class="opacity-100"
           leave-to-class="opacity-0"
         >
-          <img
+          <NuxtImg
             v-show="activeHeroIndex === i"
             :src="tour.coverImage?.url"
             :alt="tour.title"
             class="absolute inset-0 w-full h-full object-cover"
+            sizes="100vw"
+            :loading="i === 0 ? 'eager' : 'lazy'"
+            :fetchpriority="i === 0 ? 'high' : 'low'"
+            :placeholder="[30, 20, 10]"
           />
         </Transition>
         <!-- Gradient overlays -->
@@ -226,10 +230,12 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
             </svg>
           </button>
-          <img
+          <NuxtImg
             :src="galleryPhotos[lightboxIndex]?.url"
             :alt="galleryPhotos[lightboxIndex]?.altText || ''"
             class="max-w-[90vw] max-h-[85vh] object-contain rounded-lg"
+            sizes="90vw"
+            quality="85"
           />
           <button
             class="absolute right-4 top-1/2 -translate-y-1/2 text-white/60 hover:text-white p-2"

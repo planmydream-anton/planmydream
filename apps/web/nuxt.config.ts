@@ -77,14 +77,15 @@ export default defineNuxtConfig({
         // Preconnect для ускорения загрузки
         { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
         { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
+        { rel: 'preconnect', href: 'https://bysdhmcxgnqct0lq.public.blob.vercel-storage.com' },
       ],
     },
   },
 
   // Nuxt Image оптимизация
   image: {
-    quality: 80,
-    format: ['webp', 'avif', 'jpg'],
+    quality: 75,
+    format: ['webp'],
     screens: {
       xs: 320,
       sm: 640,
@@ -93,11 +94,9 @@ export default defineNuxtConfig({
       xl: 1280,
       xxl: 1536,
     },
-    // Для production можно подключить Cloudflare Images или imgproxy
-    // provider: 'cloudflare',
-    // cloudflare: {
-    //   baseURL: 'https://imagedelivery.net/your-account-hash'
-    // }
+    // Vercel Image Optimization для продакшена
+    provider: process.env.VERCEL ? 'vercel' : 'ipx',
+    domains: ['bysdhmcxgnqct0lq.public.blob.vercel-storage.com'],
   },
 
   // Tailwind CSS
