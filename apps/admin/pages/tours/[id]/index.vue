@@ -27,7 +27,40 @@
         >
           Снять с публикации
         </UButton>
+        <UButton
+          v-if="tour?.status === 'pending_review'"
+          icon="i-heroicons-check"
+          color="success"
+          @click="moderateTour('approve')"
+        >
+          Одобрить
+        </UButton>
+        <UButton
+          v-if="tour?.status === 'pending_review'"
+          icon="i-heroicons-x-mark"
+          color="error"
+          variant="soft"
+          @click="showRejectModal = true"
+        >
+          Отклонить
+        </UButton>
       </div>
+
+    <!-- Reject modal -->
+    <UModal v-model:open="showRejectModal">
+      <template #content>
+        <div class="p-6 space-y-4">
+          <h3 class="text-lg font-semibold">Отклонить тур</h3>
+          <UFormField label="Причина отклонения *">
+            <UTextarea v-model="rejectionReason" :rows="3" class="w-full" placeholder="Укажите причину..." />
+          </UFormField>
+          <div class="flex justify-end gap-2">
+            <UButton variant="ghost" @click="showRejectModal = false">Отмена</UButton>
+            <UButton color="error" @click="moderateTour('reject')" :disabled="!rejectionReason.trim()">Отклонить</UButton>
+          </div>
+        </div>
+      </template>
+    </UModal>
     </div>
 
     <!-- Sub-navigation -->
@@ -179,11 +212,13 @@ const saving = ref(false)
 
 const { data: tour, refresh } = await useFetch<any>(`/api/admin/tours/${id}`)
 
-const statusLabels: Record<string, string> = { draft: 'Черновик', published: 'Опубликовано', archived: 'Архив' }
-const statusColors: Record<string, string> = { draft: 'neutral', published: 'success', archived: 'warning' }
+const statusLabels: Record<string, string> = { draft: 'Черновик', pending_review: 'На модерации', published: 'Опубликовано', rejected: 'Отклонён', archived: 'Архив' }
+const statusColors: Record<string, string> = { draft: 'neutral', pending_review: 'warning', published: 'success', rejected: 'error', archived: 'neutral' }
 const statusOptions = [
   { label: 'Черновик', value: 'draft' },
+  { label: 'На модерации', value: 'pending_review' },
   { label: 'Опубликовано', value: 'published' },
+  { label: 'Отклонён', value: 'rejected' },
   { label: 'Архив', value: 'archived' },
 ]
 const currencyOptions = [
@@ -273,6 +308,28 @@ async function publishTour() {
     toast.add({ title: 'Тур опубликован', color: 'success' })
     refresh()
     state.status = 'published'
+  } catch (e: any) {
+    toast.add({ title: 'Ошибка', description: e.data?.message, color: 'error' })
+  }
+}
+
+const showRejectModal = ref(false)
+const rejectionReason = ref('')
+
+async function moderateTour(action: 'approve' | 'reject') {
+  try {
+    await $fetch(`/api/admin/tours/${id}/moderate`, {
+      method: 'POST',
+      body: {
+        action,
+        rejectionReason: action === 'reject' ? rejectionReason.value : undefined,
+      },
+    })
+    toast.add({ title: action === 'approve' ? 'Тур одобрен' : 'Тур отклонён', color: action === 'approve' ? 'success' : 'warning' })
+    showRejectModal.value = false
+    rejectionReason.value = ''
+    refresh()
+    state.status = action === 'approve' ? 'published' : 'rejected'
   } catch (e: any) {
     toast.add({ title: 'Ошибка', description: e.data?.message, color: 'error' })
   }

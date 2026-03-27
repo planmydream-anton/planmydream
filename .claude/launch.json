@@ -6,6 +6,12 @@
       "runtimeExecutable": "/Users/ocheretianyi.anton/.nvm/versions/node/v20.20.0/bin/node",
       "runtimeArgs": ["apps/web/.output/server/index.mjs"],
       "port": 3000
+    },
+    {
+      "name": "admin",
+      "runtimeExecutable": "/usr/local/bin/node",
+      "runtimeArgs": ["apps/admin/.output/server/index.mjs"],
+      "port": 3001
     }
   ]
 }

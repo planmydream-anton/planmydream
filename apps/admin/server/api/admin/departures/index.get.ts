@@ -2,7 +2,7 @@ import { eq, desc } from 'drizzle-orm'
 import { departures, tours } from '@planmydream/database/schema'
 
 export default defineEventHandler(async (event) => {
-  await requireAuth(event)
+  await requireAdminAccess(event)
   const db = useDB()
   const query = getQuery(event)
   const tourId = query.tourId as string | undefined

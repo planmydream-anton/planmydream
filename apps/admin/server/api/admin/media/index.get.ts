@@ -2,7 +2,7 @@ import { desc, eq, like } from 'drizzle-orm'
 import { media } from '@planmydream/database/schema'
 
 export default defineEventHandler(async (event) => {
-  await requireAuth(event)
+  await requireAdminAccess(event)
 
   const query = getQuery(event)
   const page = Number(query.page) || 1

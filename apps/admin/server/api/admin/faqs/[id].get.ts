@@ -2,7 +2,7 @@ import { eq } from 'drizzle-orm'
 import { faqs } from '@planmydream/database/schema'
 
 export default defineEventHandler(async (event) => {
-  await requireAuth(event)
+  await requireAdminAccess(event)
   const db = useDB()
   const id = getRouterParam(event, 'id')
   if (!id) throw createError({ statusCode: 400, message: 'ID обязателен' })

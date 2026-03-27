@@ -30,6 +30,30 @@ export interface TourAccommodation {
   videoUrl?: string;
 }
 
+export interface TourGuide {
+  name: string;
+  photo?: string;
+  bio?: string;
+}
+
+export interface TourStartingLocation {
+  lat: number;
+  lng: number;
+  address: string;
+}
+
+export interface TourCancellationPolicy {
+  useTemplate: boolean;
+  conditions?: string;
+}
+
+export interface TourCity {
+  city: string;
+  canArrive: boolean;
+  canDepart: boolean;
+  comment?: string;
+}
+
 export const tours = pgTable('tours', {
   id: uuid('id').primaryKey().defaultRandom(),
   slug: varchar('slug', { length: 255 }).unique().notNull(),
@@ -65,6 +89,22 @@ export const tours = pgTable('tours', {
   arrivalInfo: text('arrival_info'), // Как добраться (markdown/HTML)
   accommodations: jsonb('accommodations').$type<TourAccommodation[]>(), // Размещение
 
+  // Поля для организаторов
+  language: varchar('language', { length: 10 }),
+  maxWeight: integer('max_weight'),
+  tourTypes: jsonb('tour_types'), // {mainType, activities[], collections[]}
+  geography: jsonb('geography'), // {country, regions[], cities[], landmarks[]}
+  startingLocation: jsonb('starting_location').$type<TourStartingLocation>(),
+  videoStoriesUrl: varchar('video_stories_url', { length: 1000 }),
+  keyImpressions: jsonb('key_impressions').$type<string[]>(),
+  guides: jsonb('guides').$type<TourGuide[]>(),
+  insurance: text('insurance'),
+  cancellationPolicy: jsonb('cancellation_policy').$type<TourCancellationPolicy>(),
+  packingList: text('packing_list'),
+  cities: jsonb('cities').$type<TourCity[]>(),
+  travelRecommendations: text('travel_recommendations'),
+  generalTouristComment: text('general_tourist_comment'),
+
   // SEO
   seoTitle: varchar('seo_title', { length: 255 }),
   seoDescription: varchar('seo_description', { length: 500 }),
@@ -77,11 +117,16 @@ export const tours = pgTable('tours', {
   organizerId: uuid('organizer_id').references(() => teamMembers.id), // Организатор тура
   
   // Статус и даты
-  status: varchar('status', { length: 20 }).default('draft').notNull(), // draft, published, archived
+  status: varchar('status', { length: 20 }).default('draft').notNull(), // draft, pending_review, published, rejected, archived
   position: integer('position').default(0), // Для сортировки
   isFeatured: integer('is_featured').default(0), // Показывать на главной
   discountPercent: integer('discount_percent'), // Скидка в процентах
-  
+
+  // Модерация
+  rejectionReason: text('rejection_reason'),
+  moderatedBy: uuid('moderated_by').references(() => users.id),
+  moderatedAt: timestamp('moderated_at', { withTimezone: true }),
+
   createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
   updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
   publishedAt: timestamp('published_at', { withTimezone: true }),

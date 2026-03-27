@@ -102,3 +102,33 @@ export const loginSchema = z.object({
 });
 
 export type LoginInput = z.infer<typeof loginSchema>;
+
+// Organizer registration validation
+export const registerOrganizerSchema = z.object({
+  firstName: z.string()
+    .min(2, 'Имя должно содержать минимум 2 символа')
+    .max(255),
+  lastName: z.string()
+    .min(2, 'Фамилия должна содержать минимум 2 символа')
+    .max(255),
+  email: z.string().email('Введите корректный email'),
+  phone: z.string()
+    .min(10, 'Введите корректный номер телефона')
+    .max(20)
+    .regex(/^[\d\s\+\-\(\)]+$/, 'Некорректный формат номера'),
+  password: z.string()
+    .min(8, 'Пароль должен содержать минимум 8 символов')
+    .max(128),
+  confirmPassword: z.string(),
+  consentOffer: z.boolean().refine(val => val === true, {
+    message: 'Необходимо принять условия Публичной оферты',
+  }),
+  consentPrivacy: z.boolean().refine(val => val === true, {
+    message: 'Необходимо согласие на обработку персональных данных',
+  }),
+}).refine(data => data.password === data.confirmPassword, {
+  message: 'Пароли не совпадают',
+  path: ['confirmPassword'],
+});
+
+export type RegisterOrganizerInput = z.infer<typeof registerOrganizerSchema>;

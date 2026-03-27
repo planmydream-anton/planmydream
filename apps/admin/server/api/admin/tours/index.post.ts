@@ -2,7 +2,7 @@ import { tours } from '@planmydream/database/schema'
 import { tourSchema } from '@planmydream/shared/validators'
 
 export default defineEventHandler(async (event) => {
-  const user = await requireAuth(event)
+  const user = await requireAdminAccess(event)
   const db = useDB()
   const body = await readBody(event)
 

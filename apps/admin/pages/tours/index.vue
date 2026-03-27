@@ -101,21 +101,27 @@ const page = ref(1)
 
 const statusOptions = [
   { label: 'Все статусы', value: '' },
+  { label: 'На модерации', value: 'pending_review' },
   { label: 'Опубликовано', value: 'published' },
   { label: 'Черновик', value: 'draft' },
+  { label: 'Отклонён', value: 'rejected' },
   { label: 'Архив', value: 'archived' },
 ]
 
 const statusLabels: Record<string, string> = {
   draft: 'Черновик',
+  pending_review: 'На модерации',
   published: 'Опубликовано',
+  rejected: 'Отклонён',
   archived: 'Архив',
 }
 
 const statusColors: Record<string, string> = {
   draft: 'neutral',
+  pending_review: 'warning',
   published: 'success',
-  archived: 'warning',
+  rejected: 'error',
+  archived: 'neutral',
 }
 
 const columns = [

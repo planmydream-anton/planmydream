@@ -18,3 +18,6 @@ export * from './content';
 
 // System (inquiries, team, advantages, audit, settings)
 export * from './system';
+
+// Organizer profiles
+export * from './organizer-profiles';

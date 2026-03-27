@@ -22,6 +22,18 @@
       <p v-if="error" class="mt-4 text-sm text-red-500 text-center">
         {{ error }}
       </p>
+
+      <template #footer>
+        <div class="text-sm text-center space-y-2">
+          <p class="text-gray-500">
+            Нет аккаунта?
+            <NuxtLink to="/register" class="text-emerald-600 hover:underline font-medium">Зарегистрироваться</NuxtLink>
+          </p>
+          <p>
+            <a href="#" class="text-gray-400 hover:text-gray-600">Забыли пароль?</a>
+          </p>
+        </div>
+      </template>
     </UCard>
   </div>
 </template>

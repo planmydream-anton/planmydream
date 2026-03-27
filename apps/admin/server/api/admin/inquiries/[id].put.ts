@@ -2,7 +2,7 @@ import { eq } from 'drizzle-orm'
 import { inquiries } from '@planmydream/database/schema'
 
 export default defineEventHandler(async (event) => {
-  const user = await requireAuth(event)
+  const user = await requireAdminAccess(event)
   const db = useDB()
   const id = getRouterParam(event, 'id')
   const body = await readBody(event)

@@ -2,7 +2,7 @@ import { put } from '@vercel/blob'
 import { media } from '@planmydream/database/schema'
 
 export default defineEventHandler(async (event) => {
-  const { user } = await requireAuth(event)
+  const { user } = await requireAdminAccess(event)
 
   const form = await readMultipartFormData(event)
   if (!form || !form.length) {

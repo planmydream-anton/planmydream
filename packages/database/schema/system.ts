@@ -31,14 +31,19 @@ export const inquiries = pgTable('inquiries', {
   amocrmLeadId: integer('amocrm_lead_id'),
   amocrmSyncedAt: timestamp('amocrm_synced_at', { withTimezone: true }),
   
+  // Организатор (денормализация для быстрой фильтрации)
+  organizerId: uuid('organizer_id').references(() => users.id),
+
   // Статус
-  status: varchar('status', { length: 50 }).default('new').notNull(), // new, processing, completed, spam
-  
+  // new, processing, completed, spam, awaiting_confirmation, awaiting_prepayment, prepaid, cancelled
+  status: varchar('status', { length: 50 }).default('new').notNull(),
+
   createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
 }, (table) => [
   index('idx_inquiries_status').on(table.status),
   index('idx_inquiries_created').on(table.createdAt),
   index('idx_inquiries_tour').on(table.tourId),
+  index('idx_inquiries_organizer').on(table.organizerId),
 ]);
 
 export const inquiriesRelations = relations(inquiries, ({ one }) => ({

@@ -81,3 +81,31 @@ export async function requireRole(event: H3Event, role: 'admin' | 'manager'): Pr
 
   return user
 }
+
+export async function requireAdminAccess(event: H3Event): Promise<JWTPayload> {
+  const user = await requireAuth(event)
+
+  if (user.role === 'organizer') {
+    throw createError({
+      statusCode: 403,
+      statusMessage: 'Forbidden',
+      message: 'Доступ запрещён',
+    })
+  }
+
+  return user
+}
+
+export async function requireOrganizer(event: H3Event): Promise<JWTPayload> {
+  const user = await requireAuth(event)
+
+  if (user.role !== 'organizer') {
+    throw createError({
+      statusCode: 403,
+      statusMessage: 'Forbidden',
+      message: 'Доступ только для организаторов',
+    })
+  }
+
+  return user
+}

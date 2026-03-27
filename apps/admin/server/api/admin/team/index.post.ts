@@ -1,7 +1,7 @@
 import { teamMembers } from '@planmydream/database/schema'
 
 export default defineEventHandler(async (event) => {
-  const user = await requireAuth(event)
+  const user = await requireAdminAccess(event)
   const db = useDB()
   const body = await readBody(event)
 

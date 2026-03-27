@@ -1,5 +1,5 @@
 import { eq } from 'drizzle-orm'
-import { users } from '@planmydream/database/schema'
+import { users, organizerProfiles } from '@planmydream/database/schema'
 
 export default defineEventHandler(async (event) => {
   const auth = await requireAuth(event)
@@ -19,5 +19,23 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  return { user: user[0] }
+  const userData = user[0] as Record<string, unknown>
+
+  // For organizers, also return profile data
+  if (userData.role === 'organizer') {
+    const profile = await db.select({
+      firstName: organizerProfiles.firstName,
+      lastName: organizerProfiles.lastName,
+      photoUrl: organizerProfiles.photoUrl,
+      emailVerified: organizerProfiles.emailVerified,
+      identityVerified: organizerProfiles.identityVerified,
+      dataVerified: organizerProfiles.dataVerified,
+    }).from(organizerProfiles).where(eq(organizerProfiles.userId, auth.userId)).limit(1)
+
+    if (profile.length) {
+      userData.organizerProfile = profile[0]
+    }
+  }
+
+  return { user: userData }
 })
