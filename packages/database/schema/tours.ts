@@ -11,6 +11,12 @@ export interface TourHighlight {
   imageUrl?: string;
 }
 
+export interface TourKeyImpression {
+  title: string;
+  description?: string;
+  images?: string[];
+}
+
 export interface TourProgramDay {
   day: number;
   title: string;
@@ -18,22 +24,19 @@ export interface TourProgramDay {
   images?: string[]; // URL массив фото для дня
 }
 
-export interface TourIncludeItem {
-  category: 'transport' | 'accommodation' | 'food' | 'sights' | 'services' | 'other';
-  text: string;
-}
-
 export interface TourAccommodation {
   name: string;
   description: string;
   images: string[];
   videoUrl?: string;
+  nights?: number;
 }
 
 export interface TourGuide {
   name: string;
   photo?: string;
   bio?: string;
+  guideId?: string; // Связь с organizer_guides
 }
 
 export interface TourStartingLocation {
@@ -47,11 +50,19 @@ export interface TourCancellationPolicy {
   conditions?: string;
 }
 
-export interface TourCity {
-  city: string;
-  canArrive: boolean;
-  canDepart: boolean;
-  comment?: string;
+export interface TourTicketInfo {
+  startCity: string;
+  endCity: string;
+  transportType: 'plane' | 'train' | 'bus' | 'car' | 'ferry' | 'other';
+  earliestArrivalTime?: string;
+  latestArrivalTime?: string;
+  earliestDepartureTime?: string;
+  latestDepartureTime?: string;
+}
+
+export interface TourFaqItem {
+  question: string;
+  answer: string;
 }
 
 export const tours = pgTable('tours', {
@@ -76,7 +87,7 @@ export const tours = pgTable('tours', {
   // Контент (JSON)
   highlights: jsonb('highlights').$type<TourHighlight[]>(), // "Что нас ждет"
   program: jsonb('program').$type<TourProgramDay[]>(), // Программа по дням
-  includes: jsonb('includes').$type<TourIncludeItem[]>(), // Что включено
+  includes: jsonb('includes').$type<string[]>(), // Что включено (простой список)
   excludes: jsonb('excludes').$type<string[]>(), // Что не включено
   
   // Дополнительная информация
@@ -96,14 +107,16 @@ export const tours = pgTable('tours', {
   geography: jsonb('geography'), // {country, regions[], cities[], landmarks[]}
   startingLocation: jsonb('starting_location').$type<TourStartingLocation>(),
   videoStoriesUrl: varchar('video_stories_url', { length: 1000 }),
-  keyImpressions: jsonb('key_impressions').$type<string[]>(),
+  keyImpressions: jsonb('key_impressions').$type<TourKeyImpression[]>(),
   guides: jsonb('guides').$type<TourGuide[]>(),
-  insurance: text('insurance'),
+  insurance: varchar('insurance', { length: 50 }), // included, not_included, mandatory_not_included
   cancellationPolicy: jsonb('cancellation_policy').$type<TourCancellationPolicy>(),
   packingList: text('packing_list'),
-  cities: jsonb('cities').$type<TourCity[]>(),
+  ticketInfo: jsonb('ticket_info').$type<TourTicketInfo[]>(),
   travelRecommendations: text('travel_recommendations'),
   generalTouristComment: text('general_tourist_comment'),
+  faq: jsonb('faq').$type<TourFaqItem[]>(),
+  countries: jsonb('countries').$type<string[]>(),
 
   // SEO
   seoTitle: varchar('seo_title', { length: 255 }),

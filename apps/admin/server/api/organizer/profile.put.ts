@@ -11,8 +11,10 @@ export default defineEventHandler(async (event) => {
     'firstName', 'lastName', 'patronymic', 'aboutMe', 'photoUrl',
     'country', 'legalForm', 'inn', 'ogrnip', 'legalName', 'shortLegalName',
     'legalAddress', 'legalPhone', 'vatRates',
+    'phone', 'websiteUrl', 'socialLinks',
     'emailContact', 'emailDocuments', 'additionalContacts',
     'reviewUrls', 'timezone', 'workSchedule',
+    'cancellationPolicyTemplate',
     'notifyInquiries', 'notifyPromotions',
     'telegramChatId', 'vkId',
   ] as const

@@ -47,7 +47,7 @@ export function useAuth() {
       body: registerData,
     })
     user.value = data.user
-    await navigateTo('/o/')
+    await navigateTo('/o/profile')
   }
 
   async function logout() {

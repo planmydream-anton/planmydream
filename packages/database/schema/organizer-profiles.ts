@@ -24,6 +24,22 @@ export interface WorkSchedule {
   weekendEnd?: string;
 }
 
+export interface SocialLink {
+  type: 'instagram' | 'facebook' | 'youtube' | 'telegram' | 'vk' | 'tiktok' | 'other';
+  url: string;
+}
+
+export interface CancellationPenalty {
+  amount: string;
+  period: string;
+}
+
+export interface CancellationPolicyTemplate {
+  type: 'standard' | 'individual';
+  penalties: CancellationPenalty[];
+  additionalConditions?: string;
+}
+
 export const organizerProfiles = pgTable('organizer_profiles', {
   id: uuid('id').primaryKey().defaultRandom(),
   userId: uuid('user_id').references(() => users.id).unique().notNull(),
@@ -47,10 +63,16 @@ export const organizerProfiles = pgTable('organizer_profiles', {
   vatRates: jsonb('vat_rates').$type<VatRate[]>(),
 
   // Контакты
+  phone: varchar('phone', { length: 50 }),
+  websiteUrl: varchar('website_url', { length: 1000 }),
+  socialLinks: jsonb('social_links').$type<SocialLink[]>(),
   emailContact: varchar('email_contact', { length: 255 }),
   emailDocuments: varchar('email_documents', { length: 255 }),
   additionalContacts: text('additional_contacts'),
   reviewUrls: jsonb('review_urls').$type<string[]>(),
+
+  // Политика отмены
+  cancellationPolicyTemplate: jsonb('cancellation_policy_template').$type<CancellationPolicyTemplate>(),
 
   // График работы
   timezone: varchar('timezone', { length: 100 }),
@@ -75,12 +97,38 @@ export const organizerProfiles = pgTable('organizer_profiles', {
   index('idx_organizer_profiles_user').on(table.userId),
 ]);
 
-export const organizerProfilesRelations = relations(organizerProfiles, ({ one }) => ({
+export const organizerProfilesRelations = relations(organizerProfiles, ({ one, many }) => ({
   user: one(users, {
     fields: [organizerProfiles.userId],
     references: [users.id],
+  }),
+  guides: many(organizerGuides),
+}));
+
+// Таблица гидов организатора
+export const organizerGuides = pgTable('organizer_guides', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  organizerId: uuid('organizer_id').references(() => users.id).notNull(),
+
+  firstName: varchar('first_name', { length: 255 }).notNull(),
+  lastName: varchar('last_name', { length: 255 }).notNull(),
+  photo: varchar('photo', { length: 1000 }),
+  bio: text('bio'),
+
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+  updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
+}, (table) => [
+  index('idx_organizer_guides_organizer').on(table.organizerId),
+]);
+
+export const organizerGuidesRelations = relations(organizerGuides, ({ one }) => ({
+  organizer: one(organizerProfiles, {
+    fields: [organizerGuides.organizerId],
+    references: [organizerProfiles.userId],
   }),
 }));
 
 export type OrganizerProfile = typeof organizerProfiles.$inferSelect;
 export type NewOrganizerProfile = typeof organizerProfiles.$inferInsert;
+export type OrganizerGuide = typeof organizerGuides.$inferSelect;
+export type NewOrganizerGuide = typeof organizerGuides.$inferInsert;

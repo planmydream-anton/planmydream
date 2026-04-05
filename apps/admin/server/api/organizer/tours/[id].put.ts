@@ -33,8 +33,8 @@ export default defineEventHandler(async (event) => {
     // Organizer-specific fields
     'language', 'maxWeight', 'tourTypes', 'geography', 'startingLocation',
     'videoStoriesUrl', 'keyImpressions', 'guides', 'insurance',
-    'cancellationPolicy', 'packingList', 'cities', 'travelRecommendations',
-    'generalTouristComment',
+    'cancellationPolicy', 'packingList', 'ticketInfo', 'travelRecommendations',
+    'generalTouristComment', 'faq', 'countries',
   ]
 
   for (const field of allowedFields) {
